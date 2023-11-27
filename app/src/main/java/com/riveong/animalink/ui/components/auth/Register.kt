@@ -12,10 +12,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -27,7 +25,7 @@ import androidx.compose.ui.unit.sp
 import com.riveong.animalink.R
 
 @Composable
-fun login(modifier: Modifier = Modifier){
+fun register(modifier: Modifier = Modifier){
 
     Column(
         modifier
@@ -43,41 +41,29 @@ fun login(modifier: Modifier = Modifier){
             modifier = Modifier
                 .width(37.dp)
                 .height(37.dp)
-            )
+        )
 
         Text(
-            text = "A Great Start!",
+            text = "Welcome Back!",
             style = TextStyle(
                 fontSize = 24.sp,
                 fontWeight = FontWeight(700),
                 color = Color(0xFF000000),
-                )
+            )
         )
 
         Spacer(modifier = Modifier.height(21.dp))
 
         Text(
-            text = "Please register to continue",
+            text = "Let’s continue our journey!",
             style = TextStyle(
                 fontSize = 16.sp,
                 fontWeight = FontWeight(400),
                 color = Color(0xFF000000),
-                )
+            )
         )
 
         Spacer(modifier = Modifier.height(14.dp))
-
-        OutlinedTextField(
-            value = "",
-            onValueChange = {},
-            label = { Text("Email") },
-            singleLine = true,
-            shape = RoundedCornerShape(size = 13.dp),
-            modifier = modifier
-                .fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(35.dp))
 
         OutlinedTextField(
             value = "",
@@ -101,42 +87,33 @@ fun login(modifier: Modifier = Modifier){
                 .fillMaxWidth()
         )
 
-        Spacer(modifier = Modifier.height(35.dp))
-
-        Text(
-            text = "By registering and continuing you are agree to Animalink Term of Sevices and Privacy Policy.",
-            style = TextStyle(
-                fontSize = 12.sp
-            )
-
-        )
 
         Spacer(modifier = Modifier.height(35.dp))
 
         Button(
             onClick = { /*TODO*/ },
             modifier = modifier
-                .align(CenterHorizontally)
+                .align(Alignment.CenterHorizontally)
                 .width(267.dp)
                 .height(58.dp)
 
         ) {
-                Text(
-                    text = "Register",
-                    style = TextStyle(
-                        fontSize = 18.sp
-                    )
+            Text(
+                text = "Login",
+                style = TextStyle(
+                    fontSize = 18.sp
                 )
+            )
         }
 
         Spacer(modifier = Modifier.height(14.dp))
 
-        Row(modifier.align(CenterHorizontally)) {
+        Row(modifier.align(Alignment.CenterHorizontally)) {
 
-            Text(text = "Already have an account?")
+            Text(text = "Don't have an account?")
 
             Text(
-                text = " Login instead!",
+                text = " Register instead!",
                 style = TextStyle(fontWeight = FontWeight.Bold)
             )
 
@@ -152,6 +129,6 @@ fun login(modifier: Modifier = Modifier){
 
 @Composable
 @Preview(showBackground = true)
-fun testlogin(){
-    login()
+fun testregister(){
+    register()
 }

@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.riveong.animalink.ui.components.auth.login
+import com.riveong.animalink.ui.components.auth.register
 import com.riveong.animalink.ui.theme.AnimalinkTheme
 
 class MainActivity : ComponentActivity() {
@@ -18,7 +19,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AnimalinkTheme {
-                login()
+                register()
             }
         }
     }
