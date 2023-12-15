@@ -12,6 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.riveong.animalink.ui.components.auth.login
 import com.riveong.animalink.ui.components.auth.register
+import com.riveong.animalink.ui.components.home.header
+import com.riveong.animalink.ui.components.home.headerFull
 import com.riveong.animalink.ui.theme.AnimalinkTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,7 +21,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AnimalinkTheme {
-                register()
+                //register()
+                //login()
+                headerFull(username = "Jamal")
             }
         }
     }
@@ -37,6 +41,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     AnimalinkTheme {
-        Greeting("Android")
+        header()
     }
 }
