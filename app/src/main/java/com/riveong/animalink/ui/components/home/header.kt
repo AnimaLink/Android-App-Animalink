@@ -22,12 +22,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.riveong.animalink.R
 import com.riveong.animalink.ui.theme.primary
+import com.riveong.animalink.ui.theme.secondary
 
 @Composable
 fun headerFull(modifier: Modifier = Modifier,username: String){
@@ -39,6 +43,7 @@ Column(
     header(username = username)
     banner()
     featureMenu()
+    LatestAnimal(animal = "idk")
 }
 
 
@@ -97,7 +102,7 @@ Column(Modifier.fillMaxWidth()) {
     }
 
 @Composable
-fun featureMenu(textInput: String = "really long test" , modifier: Modifier = Modifier) {
+fun featureMenu(modifier: Modifier = Modifier) {
     Column(Modifier.fillMaxWidth()) {
 
 
@@ -109,10 +114,10 @@ fun featureMenu(textInput: String = "really long test" , modifier: Modifier = Mo
 
                     .width(80.dp)
                     .height(80.dp)
-                    .background(color = primary, shape = RoundedCornerShape(size = 15.dp))
+                    .background(color = secondary, shape = RoundedCornerShape(size = 15.dp))
             ) {
                 Text(
-                    text = textInput,
+                    text = "V-Vet",
                     textAlign = TextAlign.Center,
                     color = Color.White
                 )
@@ -126,10 +131,10 @@ fun featureMenu(textInput: String = "really long test" , modifier: Modifier = Mo
 
                     .width(80.dp)
                     .height(80.dp)
-                    .background(color = primary, shape = RoundedCornerShape(size = 15.dp))
+                    .background(color = secondary, shape = RoundedCornerShape(size = 15.dp))
             ) {
                 Text(
-                    text = textInput,
+                    text = "V-Zoo",
                     textAlign = TextAlign.Center,
                     color = Color.White
                 )
@@ -143,10 +148,10 @@ fun featureMenu(textInput: String = "really long test" , modifier: Modifier = Mo
 
                     .width(80.dp)
                     .height(80.dp)
-                    .background(color = primary, shape = RoundedCornerShape(size = 15.dp))
+                    .background(color = secondary, shape = RoundedCornerShape(size = 15.dp))
             ) {
                 Text(
-                    text = textInput,
+                    text = "V-Detect",
                     textAlign = TextAlign.Center,
                     color = Color.White
                 )
@@ -160,10 +165,10 @@ fun featureMenu(textInput: String = "really long test" , modifier: Modifier = Mo
 
                     .width(80.dp)
                     .height(80.dp)
-                    .background(color = primary, shape = RoundedCornerShape(size = 15.dp))
+                    .background(color = secondary, shape = RoundedCornerShape(size = 15.dp))
             ) {
                 Text(
-                    text = textInput,
+                    text = "Coming Soon",
                     textAlign = TextAlign.Center,
                     color = Color.White
                 )
@@ -171,6 +176,23 @@ fun featureMenu(textInput: String = "really long test" , modifier: Modifier = Mo
 
         }
     }
+}
+
+
+@Composable
+fun LatestAnimal(animal: String, modifier: Modifier = Modifier){
+    Column(Modifier.padding(27.dp)){
+        Text(
+            text = "Latest Animals",
+            style = TextStyle(
+                fontSize = 24.sp,
+                fontWeight = FontWeight(700),
+                color = Color(0xFF000000),
+            )
+
+        )
+    }
+
 }
 @Composable
 @Preview(showBackground = true)
