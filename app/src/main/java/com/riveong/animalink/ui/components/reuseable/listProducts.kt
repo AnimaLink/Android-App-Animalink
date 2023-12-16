@@ -1,32 +1,56 @@
 package com.riveong.animalink.ui.components.reuseable
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.riveong.animalink.R
 import com.riveong.animalink.ui.model.Product
 import com.riveong.animalink.ui.model.productDummy
+@Composable
+fun ListProductPage(produk:List<Product>,modifier: Modifier = Modifier){
+    Column(
+        modifier
+            .fillMaxWidth()
+    )
+
+    { 
+        searchBar()
+        ListProducts(listProduct = produk)
+    }
+}
 
 @Composable
 fun ListProducts(
     listProduct: List<Product>,
     modifier: Modifier = Modifier
 ) {
-    Column(Modifier.padding(27.dp)) {
+    Column(Modifier.padding(start = 27.dp, end = 27.dp)) {
 
         Text(
             text = "Animal Products",
@@ -54,7 +78,25 @@ fun ListProducts(
         }
     }
 }
+@Composable
+fun searchBar(modifier: Modifier = Modifier){
 
+    Row (
+        modifier
+            .fillMaxWidth()
+            .padding(27.dp),
+        horizontalArrangement = Arrangement.End
+    ){
+
+
+        Image(
+            imageVector = ImageVector.vectorResource(R.drawable.search),
+            contentDescription = "search button",
+        )
+
+    }
+
+}
 @Composable
 @Preview(showBackground = true)
 fun iforgor() {
