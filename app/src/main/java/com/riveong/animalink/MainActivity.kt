@@ -21,8 +21,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AnimalinkTheme {
-                //register()
-                //login()
+                //register = register()
+                //login = login()
+                //home = headerFull(username = "Jamal")
                 headerFull(username = "Jamal")
             }
         }

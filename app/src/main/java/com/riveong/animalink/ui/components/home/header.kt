@@ -2,6 +2,7 @@ package com.riveong.animalink.ui.components.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,8 +13,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -30,20 +33,28 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.riveong.animalink.R
+import com.riveong.animalink.ui.components.reuseable.LatestAnimal
+import com.riveong.animalink.ui.components.reuseable.LatestAnimalsRow
+import com.riveong.animalink.ui.components.reuseable.LatestProductRow
+import com.riveong.animalink.ui.model.animalsDummy
+import com.riveong.animalink.ui.model.productDummy
 import com.riveong.animalink.ui.theme.primary
 import com.riveong.animalink.ui.theme.secondary
 
 @Composable
 fun headerFull(modifier: Modifier = Modifier,username: String){
 Column(
-    Modifier
-    .fillMaxWidth()
+    modifier = Modifier
+        .fillMaxWidth()
+        .verticalScroll(rememberScrollState())
 
 ) {
     header(username = username)
     banner()
     featureMenu()
-    LatestAnimal(animal = "idk")
+    LatestAnimalsRow(listAnimals = animalsDummy)
+    LatestProductRow(listProduct = productDummy)
+
 }
 
 
@@ -89,13 +100,17 @@ fun header(username: String = "Jamal", modifier: Modifier = Modifier){
 
 @Composable
 fun banner(modifier: Modifier = Modifier){
-Column(Modifier.fillMaxWidth()) {
+Column(
+    Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 27.dp)) {
         Box(
             Modifier
                 .align(Alignment.CenterHorizontally)
                 .width(356.dp)
                 .height(158.dp)
                 .background(color = primary, shape = RoundedCornerShape(24.dp))
+
         )
 }
         Spacer(modifier = Modifier.height(28.dp))
@@ -103,97 +118,109 @@ Column(Modifier.fillMaxWidth()) {
 
 @Composable
 fun featureMenu(modifier: Modifier = Modifier) {
-    Column(Modifier.fillMaxWidth()) {
+    Column(Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 27.dp)) {
 
 
-        Row (Modifier.align(Alignment.CenterHorizontally)){
+        Row (
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.CenterHorizontally)
+
+        ){
             //1
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
 
-                    .width(80.dp)
-                    .height(80.dp)
+                    .width(62.dp)
+                    .height(62 .dp)
                     .background(color = secondary, shape = RoundedCornerShape(size = 15.dp))
             ) {
                 Text(
-                    text = "V-Vet",
+                    text = "VetLink",
                     textAlign = TextAlign.Center,
-                    color = Color.White
+                    color = Color.White,
+
+                    style = TextStyle(
+                        fontSize = 10.sp,
+                        fontWeight = FontWeight(700),
+                    )
                 )
             }
-            Spacer(modifier = Modifier.width(13.dp))
 
             //2
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
 
-                    .width(80.dp)
-                    .height(80.dp)
+                    .width(62.dp)
+                    .height(62.dp)
                     .background(color = secondary, shape = RoundedCornerShape(size = 15.dp))
             ) {
                 Text(
-                    text = "V-Zoo",
+                    text = "ZooLink",
                     textAlign = TextAlign.Center,
-                    color = Color.White
+                    color = Color.White,
+
+                    style = TextStyle(
+                        fontSize = 10.sp,
+                        fontWeight = FontWeight(700),
+                    )
+
+
                 )
             }
-            Spacer(modifier = Modifier.width(13.dp))
 
             //3
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
 
-                    .width(80.dp)
-                    .height(80.dp)
+                    .width(62.dp)
+                    .height(62.dp)
                     .background(color = secondary, shape = RoundedCornerShape(size = 15.dp))
             ) {
                 Text(
-                    text = "V-Detect",
+                    text = "LensLink",
                     textAlign = TextAlign.Center,
-                    color = Color.White
+                    color = Color.White,
+
+                    style = TextStyle(
+                        fontSize = 10.sp,
+                        fontWeight = FontWeight(700),
+                    )
                 )
             }
-            Spacer(modifier = Modifier.width(13.dp))
 
             //4
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
 
-                    .width(80.dp)
-                    .height(80.dp)
+                    .width(62.dp)
+                    .height(62.dp)
                     .background(color = secondary, shape = RoundedCornerShape(size = 15.dp))
             ) {
                 Text(
-                    text = "Coming Soon",
+                    text = "InfoLink",
                     textAlign = TextAlign.Center,
-                    color = Color.White
+                    color = Color.White,
+
+                    style = TextStyle(
+                        fontSize = 10.sp,
+                        fontWeight = FontWeight(700),
+                    )
                 )
             }
+
 
         }
     }
 }
 
-
-@Composable
-fun LatestAnimal(animal: String, modifier: Modifier = Modifier){
-    Column(Modifier.padding(27.dp)){
-        Text(
-            text = "Latest Animals",
-            style = TextStyle(
-                fontSize = 24.sp,
-                fontWeight = FontWeight(700),
-                color = Color(0xFF000000),
-            )
-
-        )
-    }
-
-}
 @Composable
 @Preview(showBackground = true)
 fun testheader(){
