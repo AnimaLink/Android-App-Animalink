@@ -13,6 +13,9 @@ val animalsDummy = listOf(
     Animal(R.drawable.necoarc, "Fluffy", "🐈 Cat", "Alice"),
     Animal(R.drawable.necoarc, "Buddy", "🐕 Dog", "Bob"),
     Animal(R.drawable.necoarc, "Cotton", "🐇 Rabbit", "Charlie"),
-    Animal(R.drawable.necoarc, "Polly", "🦜 Parrot", "David"),
+    Animal(R.drawable.necoarc, "Polly2", "🦜 Parrot", "David"),
+    Animal(R.drawable.necoarc, "Polly3", "🦜 Parrot", "David"),
+    Animal(R.drawable.necoarc, "Polly4", "🦜 Parrot", "David"),
+    Animal(R.drawable.necoarc, "Polly5", "🦜 Parrot", "David"),
     // Add more animals as needed
 )

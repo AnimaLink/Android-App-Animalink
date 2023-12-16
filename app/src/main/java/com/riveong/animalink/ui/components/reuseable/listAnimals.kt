@@ -30,10 +30,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.riveong.animalink.R
+import com.riveong.animalink.ui.model.Animal
 import com.riveong.animalink.ui.model.Product
+import com.riveong.animalink.ui.model.animalsDummy
 import com.riveong.animalink.ui.model.productDummy
 @Composable
-fun ListProductPage(produk:List<Product>,modifier: Modifier = Modifier){
+fun ListAnimalPage(hewan:List<Animal>,modifier: Modifier = Modifier){
     Column(
         modifier
             .fillMaxWidth()
@@ -41,19 +43,19 @@ fun ListProductPage(produk:List<Product>,modifier: Modifier = Modifier){
 
     { 
         searchBar()
-        ListProducts(listProduct = produk)
+        ListAnimals(listAnimal = hewan)
     }
 }
 
 @Composable
-fun ListProducts(
-    listProduct: List<Product>,
+fun ListAnimals(
+    listAnimal: List<Animal>,
     modifier: Modifier = Modifier
 ) {
     Column(Modifier.padding(start = 27.dp, end = 27.dp)) {
 
         Text(
-            text = "Animal Products",
+            text = "Animals",
             style = TextStyle(
                 fontSize = 32.sp,
                 fontWeight = FontWeight(700),
@@ -70,11 +72,12 @@ fun ListProducts(
             verticalArrangement = Arrangement.spacedBy(19.dp),
             modifier = modifier
         ) {
-            items(listProduct, key = { it.title }) { animol ->
-                LatestProduct(animol)
+            items(listAnimal, key = { it.title }) { animol ->
+                LatestAnimal(animol)
                 Spacer(modifier = Modifier.height(24.dp))
 
             }
         }
     }
 }
+
