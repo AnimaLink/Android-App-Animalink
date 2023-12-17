@@ -30,7 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.riveong.animalink.R
-import com.riveong.animalink.ui.model.Animal
+import com.riveong.animalink.data.model.Animal
 
 @Composable
 fun LatestAnimal(animal: Animal, modifier: Modifier = Modifier){

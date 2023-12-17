@@ -30,12 +30,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.riveong.animalink.R
-import com.riveong.animalink.ui.model.Animal
-import com.riveong.animalink.ui.model.Product
-import com.riveong.animalink.ui.model.animalsDummy
-import com.riveong.animalink.ui.model.productDummy
+import com.riveong.animalink.data.model.Animal
+import com.riveong.animalink.data.model.Product
+import com.riveong.animalink.data.model.animalsDummy
+import com.riveong.animalink.data.model.productDummy
 @Composable
-fun ListAnimalPage(hewan:List<Animal>,modifier: Modifier = Modifier){
+fun ListAnimalPage(hewan:List<Animal>, modifier: Modifier = Modifier){
     Column(
         modifier
             .fillMaxWidth()

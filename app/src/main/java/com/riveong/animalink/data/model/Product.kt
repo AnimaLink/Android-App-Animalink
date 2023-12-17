@@ -1,4 +1,4 @@
-package com.riveong.animalink.ui.model
+package com.riveong.animalink.data.model
 
 import com.riveong.animalink.R
 

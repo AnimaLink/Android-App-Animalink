@@ -39,8 +39,8 @@ import com.riveong.animalink.ui.components.home.header
 import com.riveong.animalink.ui.components.home.headerFull
 import com.riveong.animalink.ui.components.reuseable.LatestAnimalsRow
 import com.riveong.animalink.ui.components.reuseable.LatestProductRow
-import com.riveong.animalink.ui.model.animalsDummy
-import com.riveong.animalink.ui.model.productDummy
+import com.riveong.animalink.data.model.animalsDummy
+import com.riveong.animalink.data.model.productDummy
 import com.riveong.animalink.ui.theme.primary
 
 @Composable

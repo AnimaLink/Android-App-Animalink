@@ -18,8 +18,8 @@ import com.riveong.animalink.ui.components.home.headerFull
 import com.riveong.animalink.ui.components.profile.User
 import com.riveong.animalink.ui.components.reuseable.ListAnimalPage
 import com.riveong.animalink.ui.components.reuseable.ListProductPage
-import com.riveong.animalink.ui.model.animalsDummy
-import com.riveong.animalink.ui.model.productDummy
+import com.riveong.animalink.data.model.animalsDummy
+import com.riveong.animalink.data.model.productDummy
 import com.riveong.animalink.ui.theme.AnimalinkTheme
 
 class MainActivity : ComponentActivity() {
