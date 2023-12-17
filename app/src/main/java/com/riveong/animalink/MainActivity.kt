@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.riveong.animalink.ui.components.auth.login
 import com.riveong.animalink.ui.components.auth.register
+import com.riveong.animalink.ui.components.detail.DetailProduct
 import com.riveong.animalink.ui.components.home.header
 import com.riveong.animalink.ui.components.home.headerFull
 import com.riveong.animalink.ui.components.profile.User
@@ -32,7 +33,8 @@ class MainActivity : ComponentActivity() {
                 //product list page =  ListProductPage(produk = productDummy)
                 //ListAnimalPage(hewan = animalsDummy)
                 //user = User()
-                User()
+                //detail product = DetailProduct()
+                DetailProduct(title = "Ayam")
 
             }
         }
