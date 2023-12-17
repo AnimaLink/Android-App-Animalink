@@ -83,13 +83,14 @@ fun LatestProduct(animal: Product, modifier: Modifier = Modifier){
 @Composable
 fun LatestProductRow(
     listProduct: List<Product>,
+    headline: String = "Latest Produk",
     modifier: Modifier = Modifier
 ) {
     Column(Modifier.padding(27.dp)) {
 
 
         Text(
-            text = "Latest Animals",
+            text = headline,
             style = TextStyle(
                 fontSize = 18.sp,
                 fontWeight = FontWeight(700),

@@ -14,6 +14,7 @@ import com.riveong.animalink.ui.components.auth.login
 import com.riveong.animalink.ui.components.auth.register
 import com.riveong.animalink.ui.components.home.header
 import com.riveong.animalink.ui.components.home.headerFull
+import com.riveong.animalink.ui.components.profile.User
 import com.riveong.animalink.ui.components.reuseable.ListAnimalPage
 import com.riveong.animalink.ui.components.reuseable.ListProductPage
 import com.riveong.animalink.ui.model.animalsDummy
@@ -29,7 +30,9 @@ class MainActivity : ComponentActivity() {
                 //login = login()
                 //home = headerFull(username = "Jamal")
                 //product list page =  ListProductPage(produk = productDummy)
-                ListAnimalPage(hewan = animalsDummy)
+                //ListAnimalPage(hewan = animalsDummy)
+                //user = User()
+                User()
 
             }
         }

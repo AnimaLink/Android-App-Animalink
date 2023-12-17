@@ -1,11 +1,15 @@
 package com.riveong.animalink.ui.components.profile
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -19,6 +23,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -26,6 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.riveong.animalink.R
 import com.riveong.animalink.ui.components.home.banner
 import com.riveong.animalink.ui.components.home.featureMenu
 import com.riveong.animalink.ui.components.home.header
@@ -35,6 +42,31 @@ import com.riveong.animalink.ui.components.reuseable.LatestProductRow
 import com.riveong.animalink.ui.model.animalsDummy
 import com.riveong.animalink.ui.model.productDummy
 import com.riveong.animalink.ui.theme.primary
+
+@Composable
+fun settingBar(modifier: Modifier = Modifier){
+
+    Row (
+        modifier
+            .fillMaxWidth()
+            .padding(27.dp),
+        horizontalArrangement = Arrangement.End
+    ){
+
+
+        Image(
+            imageVector = ImageVector.vectorResource(R.drawable.settings),
+            contentDescription = "setting button",
+        )
+        Spacer(modifier.width(12.dp))
+        Image(
+            imageVector = ImageVector.vectorResource(R.drawable.logout),
+            contentDescription = "logout button",
+        )
+
+    }
+
+}
 
 @Composable
 //TODO: make data class to put the info
@@ -61,6 +93,7 @@ fun UserInfo(modifier: Modifier = Modifier, username: String = "Gotoh Hitori"){
 
 
         )
+        Spacer(modifier = Modifier.height(9.dp))
         Box(
             Modifier
                 .width(108.dp)
@@ -87,10 +120,16 @@ fun UserInfo(modifier: Modifier = Modifier, username: String = "Gotoh Hitori"){
 }
 
 @Composable
-@Preview(showBackground = true)
-fun testheader(){
-
+fun User(){
+Column (modifier = Modifier
+    .fillMaxWidth()
+    .verticalScroll(rememberScrollState())){
+    settingBar()
     UserInfo()
+    LatestAnimalsRow(listAnimals = animalsDummy, "My Animal Listing")
+    LatestProductRow(listProduct = productDummy, "My Product Listing")
+}
+
 
 
 
