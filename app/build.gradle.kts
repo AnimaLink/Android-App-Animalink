@@ -69,7 +69,9 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     //preferences datastore
-    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
+    implementation ("androidx.datastore:datastore-preferences-rxjava2:1.0.0")
+    implementation ("androidx.datastore:datastore-preferences-rxjava3:1.0.0")
 
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")

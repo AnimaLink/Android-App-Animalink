@@ -15,6 +15,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,10 +31,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
 import com.riveong.animalink.R
 import com.riveong.animalink.data.api.ApiConfig
+import com.riveong.animalink.data.datastore.UserStore
 import com.riveong.animalink.data.model.LoginResponse
 import com.riveong.animalink.data.model.RegisterResponse
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -42,6 +52,8 @@ fun register(modifier: Modifier = Modifier){
     val context = LocalContext.current
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    val store = UserStore(context)
+    val tokenText = store.getAccessToken.collectAsState(initial = "")
 
 
     Column(
@@ -108,7 +120,7 @@ fun register(modifier: Modifier = Modifier){
         Spacer(modifier = Modifier.height(35.dp))
 
         Button(
-            onClick = { postLogin(context, email, password) },
+            onClick = { postLogin(context, email, password, store, tokenText) },
             modifier = modifier
                 .align(Alignment.CenterHorizontally)
                 .width(267.dp)
@@ -144,7 +156,8 @@ fun register(modifier: Modifier = Modifier){
 }
 
 
-private fun postLogin(context: Context, email: String, password: String) {
+@OptIn(DelicateCoroutinesApi::class)
+private fun postLogin(context: Context, email: String, password: String, store: UserStore, value: State<String>) {
 
     val client = ApiConfig.getApiService("").postLogin(
         email = email, password = password
@@ -160,9 +173,16 @@ private fun postLogin(context: Context, email: String, password: String) {
                 //logic if successful
 
                 if (responseBody.status == "success") {
-                    Toast.makeText(context, responseBody.message.toString(), Toast.LENGTH_SHORT).show()
-
-
+                    GlobalScope.launch {
+                        store.saveToken(responseBody.data?.accessToken!!)
+                    }
+                    val uiScope= CoroutineScope(Dispatchers.Main)
+                    uiScope.launch {
+                        val token: LiveData<String> = store.getAccessToken.asLiveData()
+                        token.observeForever{data:String ->
+                            println(data)
+                        }
+                    }
                 }
 
                 if (responseBody.status == "fail") {
