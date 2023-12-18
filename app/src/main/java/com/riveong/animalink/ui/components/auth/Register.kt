@@ -1,5 +1,7 @@
 package com.riveong.animalink.ui.components.auth
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,9 +15,14 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -23,9 +30,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.riveong.animalink.R
+import com.riveong.animalink.data.api.ApiConfig
+import com.riveong.animalink.data.model.LoginResponse
+import com.riveong.animalink.data.model.RegisterResponse
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 @Composable
 fun register(modifier: Modifier = Modifier){
+    val context = LocalContext.current
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+
 
     Column(
         modifier
@@ -66,9 +83,9 @@ fun register(modifier: Modifier = Modifier){
         Spacer(modifier = Modifier.height(14.dp))
 
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
-            label = { Text("Username") },
+            value = email,
+            onValueChange = { email = it },
+            label = { Text("Email") },
             singleLine = true,
             shape = RoundedCornerShape(size = 13.dp),
             modifier = modifier
@@ -78,8 +95,8 @@ fun register(modifier: Modifier = Modifier){
         Spacer(modifier = Modifier.height(35.dp))
 
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = password,
+            onValueChange = { password = it },
             label = { Text("Password") },
             singleLine = true,
             shape = RoundedCornerShape(size = 13.dp),
@@ -91,7 +108,7 @@ fun register(modifier: Modifier = Modifier){
         Spacer(modifier = Modifier.height(35.dp))
 
         Button(
-            onClick = { /*TODO*/ },
+            onClick = { postLogin(context, email, password) },
             modifier = modifier
                 .align(Alignment.CenterHorizontally)
                 .width(267.dp)
@@ -126,6 +143,40 @@ fun register(modifier: Modifier = Modifier){
     }
 }
 
+
+private fun postLogin(context: Context, email: String, password: String) {
+
+    val client = ApiConfig.getApiService("").postLogin(
+        email = email, password = password
+    )
+    client.enqueue(object : Callback<LoginResponse> {
+        override fun onResponse(
+            call: Call<LoginResponse>,
+            response: Response<LoginResponse>
+        ) {
+
+            val responseBody = response.body()
+            if (response.isSuccessful && responseBody != null) {
+                //logic if successful
+
+                if (responseBody.status == "success") {
+                    Toast.makeText(context, responseBody.message.toString(), Toast.LENGTH_SHORT).show()
+
+
+                }
+
+                if (responseBody.status == "fail") {
+                    Toast.makeText(context, "Something went wrong: ${responseBody.message.toString()}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+            Toast.makeText(context, "Something went wrong (┬┬﹏┬┬)", Toast.LENGTH_SHORT).show()
+        }
+
+    })
+}
 
 @Composable
 @Preview(showBackground = true)

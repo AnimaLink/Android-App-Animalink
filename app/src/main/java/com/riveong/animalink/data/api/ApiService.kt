@@ -3,20 +3,27 @@ package com.riveong.animalink.data.api
 import com.riveong.animalink.data.model.LoginResponse
 import com.riveong.animalink.data.model.RegisterResponse
 import retrofit2.Call
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
 interface ApiService {
-    /*@GET("search/users")
-    fun getGithub(
-        @Query("q") query: String
+    @FormUrlEncoded
+    @POST("/api/auth/login")
+    fun postLogin(
+        @Field("email",encoded=true) email:String,
+        @Field("password",encoded=true) password:String,
+        ): Call<LoginResponse>
 
-    ): Call<GithubResponse>*/
-
-    @POST("/auth/login")
-    fun postLogin(): Call<LoginResponse>
-
-    @POST("/auth/register")
-    fun postRegister(): Call<RegisterResponse>
+    @FormUrlEncoded
+    @POST("/api/auth/register")
+    fun postRegister(
+        @Field("first_name",encoded = true) fname:String,
+        @Field("last_name",encoded = true) lname:String,
+        @Field("wa_number",encoded = true) phone:String,
+        @Field("email",encoded=true) email:String,
+        @Field("password",encoded=true) password:String,
+    ): Call<RegisterResponse>
 
 
 }

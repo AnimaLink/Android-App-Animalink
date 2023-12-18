@@ -20,6 +20,7 @@ import com.riveong.animalink.ui.components.reuseable.ListAnimalPage
 import com.riveong.animalink.ui.components.reuseable.ListProductPage
 import com.riveong.animalink.data.model.animalsDummy
 import com.riveong.animalink.data.model.productDummy
+import com.riveong.animalink.ui.components.splash.splash
 import com.riveong.animalink.ui.theme.AnimalinkTheme
 
 class MainActivity : ComponentActivity() {
@@ -27,14 +28,16 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AnimalinkTheme {
+                //splash = splash()
                 //register = register()
                 //login = login()
                 //home = headerFull(username = "Jamal")
                 //product list page =  ListProductPage(produk = productDummy)
                 //ListAnimalPage(hewan = animalsDummy)
                 //user = User()
-                //detail product = DetailProduct()
-                DetailProduct(title = "Ayam")
+                //detail product = DetailProduct("")
+                //DetailProduct(title = "Ayam")
+
 
             }
         }
