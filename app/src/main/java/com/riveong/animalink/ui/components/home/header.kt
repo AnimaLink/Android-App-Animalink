@@ -23,7 +23,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -81,7 +83,15 @@ fun header(username: String = "Jamal", modifier: Modifier = Modifier){
         )
 
         Text(
-            text = "Welcome $username!"
+            style = TextStyle(fontWeight = FontWeight(700)),
+            text = "Welcome "
+        )
+        Text(
+            style = TextStyle(
+                color = Color(0xFFF47D25),
+                fontWeight = FontWeight(700)
+            ),
+            text = username
         )
 
         Spacer(
@@ -89,10 +99,24 @@ fun header(username: String = "Jamal", modifier: Modifier = Modifier){
 
         )
 
-        Image(
-            imageVector = ImageVector.vectorResource(R.drawable.search),
-            contentDescription = "search button",
-        )
+        Box(
+            Modifier
+                .width(75.dp)
+                .height(23.dp)
+                .background(color = primary, shape = RoundedCornerShape(size = 16.5.dp)),
+            contentAlignment = Alignment.Center,
+
+            ){
+            Text(
+                text = "Member",
+                textAlign = TextAlign.Center,
+                style = TextStyle(
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight(500),
+                    color = Color(0xFFFFFFFF),
+                )
+            )
+        }
 
     }
 
@@ -102,9 +126,11 @@ fun header(username: String = "Jamal", modifier: Modifier = Modifier){
 fun banner(modifier: Modifier = Modifier){
 Column(
     Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 27.dp)) {
-        Box(
+        .fillMaxWidth()
+        .padding(horizontal = 27.dp)) {
+        Image(
+            painterResource(R.drawable.banner),
+            null,
             Modifier
                 .align(Alignment.CenterHorizontally)
                 .width(356.dp)
@@ -118,9 +144,10 @@ Column(
 
 @Composable
 fun featureMenu(modifier: Modifier = Modifier) {
-    Column(Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 27.dp)) {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 27.dp)) {
 
 
         Row (
@@ -136,7 +163,7 @@ fun featureMenu(modifier: Modifier = Modifier) {
                 modifier = Modifier
 
                     .width(62.dp)
-                    .height(62 .dp)
+                    .height(62.dp)
                     .background(color = secondary, shape = RoundedCornerShape(size = 15.dp))
             ) {
                 Text(

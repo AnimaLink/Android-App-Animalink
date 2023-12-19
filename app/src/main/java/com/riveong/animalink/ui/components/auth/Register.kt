@@ -37,7 +37,6 @@ import com.riveong.animalink.R
 import com.riveong.animalink.data.api.ApiConfig
 import com.riveong.animalink.data.datastore.UserStore
 import com.riveong.animalink.data.model.LoginResponse
-import com.riveong.animalink.data.model.RegisterResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -174,9 +173,10 @@ private fun postLogin(context: Context, email: String, password: String, store: 
 
                 if (responseBody.status == "success") {
                     GlobalScope.launch {
-                        store.saveToken(responseBody.data?.accessToken!!)
+                        store.saveToken(responseBody.data?.accessToken!!, true)
                     }
-                    val uiScope= CoroutineScope(Dispatchers.Main)
+                    //print the token as livedata
+                    val uiScope = CoroutineScope(Dispatchers.Main)
                     uiScope.launch {
                         val token: LiveData<String> = store.getAccessToken.asLiveData()
                         token.observeForever{data:String ->

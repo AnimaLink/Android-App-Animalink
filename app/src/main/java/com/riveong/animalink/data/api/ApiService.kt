@@ -2,9 +2,11 @@ package com.riveong.animalink.data.api
 
 import com.riveong.animalink.data.model.LoginResponse
 import com.riveong.animalink.data.model.RegisterResponse
+import com.riveong.animalink.data.model.UserResponse
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface ApiService {
@@ -24,6 +26,11 @@ interface ApiService {
         @Field("email",encoded=true) email:String,
         @Field("password",encoded=true) password:String,
     ): Call<RegisterResponse>
+
+    @GET("/api/users")
+    fun getUserData(
+    ): Call<UserResponse>
+
 
 
 }

@@ -1,6 +1,7 @@
 package com.riveong.animalink.ui.components.reuseable
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,11 +17,15 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SearchBarColors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
@@ -42,17 +47,19 @@ fun ListAnimalPage(hewan:List<Animal>, modifier: Modifier = Modifier){
     )
 
     { 
-        searchBar()
+        //searchBar()
         ListAnimals(listAnimal = hewan)
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListAnimals(
     listAnimal: List<Animal>,
     modifier: Modifier = Modifier
 ) {
-    Column(Modifier.padding(start = 27.dp, end = 27.dp)) {
+
+    Column(Modifier.padding(start = 27.dp, end = 27.dp, top = 27.dp)) {
 
         Text(
             text = "Animals",
@@ -61,6 +68,16 @@ fun ListAnimals(
                 fontWeight = FontWeight(700),
             )
         )
+        SearchBar(
+            query = "",
+            onQueryChange = {  },
+            onSearch = {},
+            active = false,
+            onActiveChange = {},
+            Modifier.height(45.dp)
+        ) {
+
+        }
         Spacer(modifier = Modifier.height(24.dp))
 
         //TODO: add categories

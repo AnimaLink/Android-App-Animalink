@@ -68,6 +68,9 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
+    //navigation
+    implementation ("androidx.navigation:navigation-compose:2.7.6")
+
     //preferences datastore
     implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
     implementation ("androidx.datastore:datastore-preferences-rxjava2:1.0.0")
@@ -81,6 +84,8 @@ dependencies {
     //material3
     implementation("androidx.compose.material3:material3:1.1.2")
     implementation("androidx.compose.material3:material3-window-size-class:1.1.2")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
+
 
     //coil
     implementation("io.coil-kt:coil-compose:2.5.0")
