@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
@@ -65,7 +66,8 @@ Column(
 fun header(username: String = "Jamal", modifier: Modifier = Modifier){
 
     Row (
-        modifier
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
             .fillMaxWidth()
             .padding(27.dp)
     ){
@@ -75,7 +77,7 @@ fun header(username: String = "Jamal", modifier: Modifier = Modifier){
             contentDescription = null,
             modifier = Modifier
                 .clip(CircleShape)
-                .size(20.dp)
+                .size(25.dp)
         )
 
         Spacer(
@@ -83,13 +85,18 @@ fun header(username: String = "Jamal", modifier: Modifier = Modifier){
         )
 
         Text(
-            style = TextStyle(fontWeight = FontWeight(700)),
+            style = TextStyle(
+                fontWeight = FontWeight(700),
+                fontSize = 15.sp
+
+            ),
             text = "Welcome "
         )
         Text(
             style = TextStyle(
                 color = Color(0xFFF47D25),
-                fontWeight = FontWeight(700)
+                fontWeight = FontWeight(700),
+                fontSize = 15.sp
             ),
             text = username
         )
@@ -119,7 +126,6 @@ fun header(username: String = "Jamal", modifier: Modifier = Modifier){
         }
 
     }
-
 }
 
 @Composable
@@ -151,95 +157,139 @@ fun featureMenu(modifier: Modifier = Modifier) {
 
 
         Row (
-            horizontalArrangement = Arrangement.SpaceEvenly,
+            horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.CenterHorizontally)
 
         ){
-            //1
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
+            //1 VetLink
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
 
-                    .width(62.dp)
-                    .height(62.dp)
-                    .background(color = secondary, shape = RoundedCornerShape(size = 15.dp))
-            ) {
+                        .width(62.dp)
+                        .height(62.dp)
+                        .background(color = secondary, shape = RoundedCornerShape(size = 15.dp))
+                ) {
+                    Image(
+                        painterResource(R.drawable.veterinary),
+                        null,
+                        Modifier.width(35.dp),
+                        colorFilter = ColorFilter.tint(Color.White)
+                        )
+
+                }
+                Spacer(modifier = Modifier.height(10.dp))
                 Text(
                     text = "VetLink",
                     textAlign = TextAlign.Center,
-                    color = Color.White,
+                    color = Color.Black,
 
                     style = TextStyle(
                         fontSize = 10.sp,
-                        fontWeight = FontWeight(700),
+                        fontWeight = FontWeight(500),
                     )
                 )
             }
 
             //2
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
 
-                    .width(62.dp)
-                    .height(62.dp)
-                    .background(color = secondary, shape = RoundedCornerShape(size = 15.dp))
-            ) {
+                        .width(62.dp)
+                        .height(62.dp)
+                        .background(color = secondary, shape = RoundedCornerShape(size = 15.dp)
+                        )
+                ) {
+                    Image(
+                        painterResource(R.drawable.veterinary),
+                        null,
+                        Modifier.width(35.dp),
+                        colorFilter = ColorFilter.tint(Color.White)
+
+                    )
+
+                }
+                Spacer(modifier = Modifier.height(10.dp))
                 Text(
-                    text = "ZooLink",
+                    text = "VetLink",
                     textAlign = TextAlign.Center,
-                    color = Color.White,
+                    color = Color.Black,
 
                     style = TextStyle(
                         fontSize = 10.sp,
-                        fontWeight = FontWeight(700),
-                    )
-
-
+                        fontWeight = FontWeight(500),
+                        )
                 )
             }
 
             //3
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
 
-                    .width(62.dp)
-                    .height(62.dp)
-                    .background(color = secondary, shape = RoundedCornerShape(size = 15.dp))
-            ) {
+                        .width(62.dp)
+                        .height(62.dp)
+                        .background(color = secondary, shape = RoundedCornerShape(size = 15.dp))
+                ) {
+                    Image(
+                        painterResource(R.drawable.veterinary),
+                        null,
+                        Modifier.width(35.dp),
+                        colorFilter = ColorFilter.tint(Color.White)
+
+                    )
+
+                }
+                Spacer(modifier = Modifier.height(10.dp))
                 Text(
-                    text = "LensLink",
+                    text = "VetLink",
                     textAlign = TextAlign.Center,
-                    color = Color.White,
+                    color = Color.Black,
 
                     style = TextStyle(
                         fontSize = 10.sp,
-                        fontWeight = FontWeight(700),
-                    )
+                        fontWeight = FontWeight(500),
+
+                        )
                 )
             }
 
             //4
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
 
-                    .width(62.dp)
-                    .height(62.dp)
-                    .background(color = secondary, shape = RoundedCornerShape(size = 15.dp))
-            ) {
+                        .width(62.dp)
+                        .height(62.dp)
+                        .background(color = secondary, shape = RoundedCornerShape(size = 15.dp))
+                ) {
+                    Image(
+                        painterResource(R.drawable.veterinary),
+                        null,
+                        Modifier.width(35.dp),
+                        colorFilter = ColorFilter.tint(Color.White)
+
+                    )
+
+                }
+                Spacer(modifier = Modifier.height(10.dp))
                 Text(
-                    text = "InfoLink",
+                    text = "VetLink",
                     textAlign = TextAlign.Center,
-                    color = Color.White,
+                    color = Color.Black,
 
                     style = TextStyle(
                         fontSize = 10.sp,
-                        fontWeight = FontWeight(700),
-                    )
+                        fontWeight = FontWeight(500),
+
+                        )
                 )
             }
 
