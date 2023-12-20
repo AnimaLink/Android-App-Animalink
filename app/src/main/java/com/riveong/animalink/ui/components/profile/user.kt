@@ -47,7 +47,6 @@ import com.riveong.animalink.data.model.LoginResponse
 import com.riveong.animalink.data.model.Profile
 import com.riveong.animalink.data.model.ProfileDummy
 import com.riveong.animalink.data.model.UserResponse
-import com.riveong.animalink.data.model.animalsDummy
 import com.riveong.animalink.data.model.productDummy
 import com.riveong.animalink.ui.components.reuseable.LatestAnimalsRow
 import com.riveong.animalink.ui.components.reuseable.LatestProductRow
@@ -156,7 +155,7 @@ fun User() {
     ) {
         settingBar()
         UserInfo(profile = data.value)
-        LatestAnimalsRow(listAnimals = animalsDummy, "My Animal Listing")
+        //LatestAnimalsRow(listAnimals = animalsDummy, "My Animal Listing")
         LatestProductRow(listProduct = productDummy, "My Product Listing")
     }
 }

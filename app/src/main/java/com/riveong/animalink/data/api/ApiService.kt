@@ -1,13 +1,16 @@
 package com.riveong.animalink.data.api
 
+import com.riveong.animalink.data.model.ForumResponse
 import com.riveong.animalink.data.model.LoginResponse
 import com.riveong.animalink.data.model.RegisterResponse
+import com.riveong.animalink.data.model.SingleForumResponse
 import com.riveong.animalink.data.model.UserResponse
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface ApiService {
     @FormUrlEncoded
@@ -30,6 +33,16 @@ interface ApiService {
     @GET("/api/users")
     fun getUserData(
     ): Call<UserResponse>
+
+    @GET("/api/forums")
+    fun getForum(
+    ): Call<ForumResponse>
+
+    @GET("/api/forums/{id}")
+    fun getSingleForum(
+        @Path("id") id:String
+    ): Call<SingleForumResponse>
+
 
 
 

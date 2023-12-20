@@ -3,8 +3,6 @@ package com.riveong.animalink
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -12,38 +10,26 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.riveong.animalink.ui.components.auth.login
-import com.riveong.animalink.ui.components.auth.register
-import com.riveong.animalink.ui.components.detail.DetailProduct
-import com.riveong.animalink.ui.components.home.header
+import androidx.navigation.navArgument
 import com.riveong.animalink.ui.components.home.headerFull
 import com.riveong.animalink.ui.components.profile.User
-import com.riveong.animalink.ui.components.reuseable.ListAnimalPage
-import com.riveong.animalink.ui.components.reuseable.ListProductPage
-import com.riveong.animalink.data.model.animalsDummy
-import com.riveong.animalink.data.model.productDummy
 import com.riveong.animalink.ui.components.chat.Chat
+import com.riveong.animalink.ui.components.forum.DetailProduct
 import com.riveong.animalink.ui.components.history.History
-import com.riveong.animalink.ui.components.splash.splash
 import com.riveong.animalink.ui.logic
 import com.riveong.animalink.ui.screen.NavigationItem
 import com.riveong.animalink.ui.screen.Screen
@@ -66,8 +52,10 @@ class MainActivity : ComponentActivity() {
 
                 //detail product = DetailProduct("")
                 //DetailProduct(title = "Ayam")
-                logic()
 
+
+                logic()
+                //NewForum()
 
             }
         }
@@ -152,7 +140,9 @@ fun Ihate(
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(Screen.Home.route) {
-                headerFull(username = "jamal")
+                headerFull(username = "jamal", navHostController = navController,navigateToDetail = { ListingID ->
+                    navController.navigate(Screen.Detail.createRoute(ListingID))
+                })
             }
             composable(Screen.Chat.route) {
                 Chat()
@@ -163,21 +153,21 @@ fun Ihate(
             composable(Screen.History.route) {
                 History()
             }
-            composable(Screen.Forum.route) {
-                ListAnimalPage(hewan = animalsDummy)
+            composable(
+                route = Screen.Detail.route,
+                arguments = listOf(navArgument("ListingID") { type = NavType.LongType }),
+            ) {
+                val id = it.arguments?.getLong("ListingID") ?: -1L
+                DetailProduct(
+                    id = id
+                )
             }
+
+            }
+
+            /*composable(Screen.Forum.route) {
+                ListAnimalPage(hewan = animalsDummy)
+            }*/
 
         }
     }
-}
-
-
-
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    AnimalinkTheme {
-        headerFull(username = "Jamal")
-    }
-}
