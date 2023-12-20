@@ -5,6 +5,8 @@ Hiya! Gabriel here! This is a front-end app for animalink! I'm using jetpack com
   
 ## Change logs  
 #### A-0.0.3
+- Half way there!
+#### A-0.0.3
 - Adding Header
 #### A-0.0.2  
 - Adding Login Layout
