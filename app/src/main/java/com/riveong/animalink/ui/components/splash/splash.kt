@@ -1,53 +1,94 @@
 package com.riveong.animalink.ui.components.splash
 
 import android.content.Context
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.Image
+import android.os.Handler
+import android.os.Looper
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.asLiveData
+import androidx.navigation.NavHostController
 import com.riveong.animalink.R
-import com.riveong.animalink.data.api.ApiConfig
 import com.riveong.animalink.data.datastore.ProfileStore
-import com.riveong.animalink.data.datastore.UserStore
-import com.riveong.animalink.data.model.UserResponse
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.riveong.animalink.ui.screen.Screen
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlin.coroutines.resume
 
 @Composable
-fun splash(modifier: Modifier = Modifier): Boolean{
+fun splash(modifier: Modifier = Modifier, navHostController: NavHostController) {
     val context = LocalContext.current
-    val store = UserStore(context)
-    val store2 = ProfileStore(context)
+    val store = remember { ProfileStore(context) }
+    val scope = rememberCoroutineScope()
+
+    LaunchedEffect(key1 = store) {
+        val saved = wasLoginned(store)
+        if (saved){
+            navHostController.navigate(Screen.Login.route)
+        } else {
+            navHostController.navigate(Screen.Home.route)
+        }
+    }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-        modifier = Modifier.fillMaxWidth()
-        .fillMaxHeight()
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+    ) {
+        Image(
+            painter = painterResource(R.drawable.logo_dummy),
+            contentDescription = null,
+            Modifier.width(169.dp)
+        )
+    }
+}
+
+
+suspend fun wasLoginned(store: ProfileStore): Boolean = suspendCancellableCoroutine { continuation ->
+    var saved = true
+    val token: LiveData<String> = store.getTokenProfile.asLiveData()
+    val observer = Observer<String> { data ->
+        if (data.isEmpty() && data == "") {
+            saved = true
+        } else {
+            saved = false
+        }
+        continuation.resume(saved)
+    }
+    token.observeForever(observer)
+    continuation.invokeOnCancellation {
+        token.removeObserver(observer)
+    }
+}
+
+/*@Composable
+fun splash(modifier: Modifier = Modifier, navHostController: NavHostController) {
+    val context = LocalContext.current
+    val store = remember { ProfileStore(context) }
+
+
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
     ) {
         Image(
             painter = painterResource(R.drawable.logo_dummy),
@@ -56,64 +97,40 @@ fun splash(modifier: Modifier = Modifier): Boolean{
         )
 
     }
-//TODO: if login / if not login
-    getInfo(context, store, store2)
-    return false
-}
+    var saved = Handler(Looper.getMainLooper()).postDelayed({
+        wasLoginned(store)
+    }, 5000)
 
-@OptIn(DelicateCoroutinesApi::class)
-private fun getInfo(context: Context, store: UserStore, profile: ProfileStore) {
+    if (saved){
 
-    val uiScope = CoroutineScope(Dispatchers.Main)
-    uiScope.launch {
-        val token: LiveData<String> = store.getAccessToken.asLiveData()
-        token.observeForever { data: String ->
-            val client = ApiConfig.getApiService(data).getUserData()
-            client.enqueue(object : Callback<UserResponse> {
-                override fun onResponse(
-                    call: Call<UserResponse>,
-                    response: Response<UserResponse>
-                ) {
+        navHostController.navigate(Screen.Login.route)
+    }
 
-                    val responseBody = response.body()
-                    if (response.isSuccessful && responseBody != null) {
-                        //logic if successful
-
-                        if (responseBody.status == "success") {
-                            GlobalScope.launch {
-                                profile.saveProfile(
-                                    username = "${responseBody.data.userData.firstName} ${responseBody.data.userData.lastName}",
-                                    email = responseBody.data.userData.email,
-                                    avatar = responseBody.data.userData.avatar
-                                )
-                            }
-
-
-
-                        }
-
-                        if (responseBody.status == "fail") {
-                            Toast.makeText(
-                                context,
-                                "Something went wrong: ${responseBody.message}",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
-                }
-
-                override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                    Toast.makeText(context, "Something went wrong (┬┬﹏┬┬)", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            })
-        }
+    if(!saved){
+        navHostController.navigate(Screen.Home.route)
     }
 }
 
-        @Composable
-        @Preview
-        fun splashTesting() {
-            splash()
+//TODO: if login / if not login
 
+fun wasLoginned(store: ProfileStore): Boolean {
+    var saved = true
+    GlobalScope.launch(Dispatchers.Main) {
+        val token: LiveData<String> = store.getTokenProfile.asLiveData()
+        token.observeForever { data: String ->
+            print(data)
+            if (data.isEmpty() && data == "") {
+                saved = true
+
+            } else {
+                saved = false
+            }
         }
+
+
+
+    }
+    return saved
+}
+
+*/

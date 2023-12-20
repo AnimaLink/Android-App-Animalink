@@ -44,6 +44,7 @@ import com.riveong.animalink.data.model.productDummy
 import com.riveong.animalink.ui.components.chat.Chat
 import com.riveong.animalink.ui.components.history.History
 import com.riveong.animalink.ui.components.splash.splash
+import com.riveong.animalink.ui.logic
 import com.riveong.animalink.ui.screen.NavigationItem
 import com.riveong.animalink.ui.screen.Screen
 import com.riveong.animalink.ui.theme.AnimalinkTheme
@@ -62,9 +63,10 @@ class MainActivity : ComponentActivity() {
                 //product list page =  ListProductPage(produk = productDummy)
                 //ListAnimalPage(hewan = animalsDummy)
                 //user = User()
-                Ihate()
+
                 //detail product = DetailProduct("")
                 //DetailProduct(title = "Ayam")
+                logic()
 
 
             }

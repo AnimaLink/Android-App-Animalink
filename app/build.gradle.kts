@@ -68,6 +68,10 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
+    //MVVM
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
+
+
     //navigation
     implementation ("androidx.navigation:navigation-compose:2.7.6")
 

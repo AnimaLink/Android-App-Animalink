@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -26,17 +27,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
+import androidx.navigation.NavHostController
 import com.riveong.animalink.R
 import com.riveong.animalink.data.api.ApiConfig
-import com.riveong.animalink.data.datastore.UserStore
+import com.riveong.animalink.data.datastore.ProfileStore
 import com.riveong.animalink.data.model.LoginResponse
+import com.riveong.animalink.ui.screen.Screen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -47,12 +50,12 @@ import retrofit2.Callback
 import retrofit2.Response
 
 @Composable
-fun register(modifier: Modifier = Modifier){
-    val context = LocalContext.current
+fun register(modifier: Modifier = Modifier, navHostController: NavHostController){
+
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    val store = UserStore(context)
-    val tokenText = store.getAccessToken.collectAsState(initial = "")
+    val context = LocalContext.current
+    val store = remember { ProfileStore(context) }
 
 
     Column(
@@ -119,7 +122,7 @@ fun register(modifier: Modifier = Modifier){
         Spacer(modifier = Modifier.height(35.dp))
 
         Button(
-            onClick = { postLogin(context, email, password, store, tokenText) },
+            onClick = { postLogin(context, email, password, store, navHostController = navHostController) },
             modifier = modifier
                 .align(Alignment.CenterHorizontally)
                 .width(267.dp)
@@ -140,9 +143,14 @@ fun register(modifier: Modifier = Modifier){
 
             Text(text = "Don't have an account?")
 
-            Text(
-                text = " Register instead!",
-                style = TextStyle(fontWeight = FontWeight.Bold)
+            ClickableText(
+                text = AnnotatedString(" Register instead!"),
+                style = TextStyle(fontWeight = FontWeight.Bold),
+                onClick = {
+                    navHostController.navigate(Screen.Login.route)
+                }
+
+
             )
 
         }
@@ -156,7 +164,7 @@ fun register(modifier: Modifier = Modifier){
 
 
 @OptIn(DelicateCoroutinesApi::class)
-private fun postLogin(context: Context, email: String, password: String, store: UserStore, value: State<String>) {
+private fun postLogin(context: Context, email: String, password: String, store: ProfileStore, navHostController: NavHostController) {
 
     val client = ApiConfig.getApiService("").postLogin(
         email = email, password = password
@@ -172,17 +180,18 @@ private fun postLogin(context: Context, email: String, password: String, store: 
                 //logic if successful
 
                 if (responseBody.status == "success") {
-                    GlobalScope.launch {
-                        store.saveToken(responseBody.data?.accessToken!!, true)
+                    GlobalScope.launch(Dispatchers.IO) {
+                        store.saveProfile(token = responseBody.data?.accessToken!!)
                     }
                     //print the token as livedata
                     val uiScope = CoroutineScope(Dispatchers.Main)
                     uiScope.launch {
-                        val token: LiveData<String> = store.getAccessToken.asLiveData()
+                        val token: LiveData<String> = store.getTokenProfile.asLiveData()
                         token.observeForever{data:String ->
-                            println(data)
+                            println("ini tokennya cuy: "+data)
                         }
                     }
+                    navHostController.navigate(Screen.Home.route)
                 }
 
                 if (responseBody.status == "fail") {
@@ -196,10 +205,4 @@ private fun postLogin(context: Context, email: String, password: String, store: 
         }
 
     })
-}
-
-@Composable
-@Preview(showBackground = true)
-fun testregister(){
-    register()
 }

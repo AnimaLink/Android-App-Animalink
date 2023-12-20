@@ -8,11 +8,11 @@ data class UserResponse(
 
 data class UserData(
 	val createdAt: String,
-	val waNumber: String,
-	val lastName: String,
+	val wa_number: String,
+	val last_Name: String,
 	val id: Int,
 	val avatar: String,
-	val firstName: String,
+	val first_name: String,
 	val email: String,
 	val updatedAt: String
 )

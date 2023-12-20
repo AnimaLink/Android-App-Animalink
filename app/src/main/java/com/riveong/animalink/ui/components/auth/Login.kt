@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -25,20 +26,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.riveong.animalink.R
 import com.riveong.animalink.data.api.ApiConfig
 import com.riveong.animalink.data.model.RegisterResponse
+import com.riveong.animalink.ui.screen.Screen
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 @Composable
-fun login(modifier: Modifier = Modifier){
+fun login(modifier: Modifier = Modifier, navHostController: NavHostController){
     val context = LocalContext.current
 
 
@@ -162,7 +166,28 @@ fun login(modifier: Modifier = Modifier){
 
         Button(
             onClick = {
-                postRegister(context = context, email = email, fname = firstName, lname = lastName, password = password, phone = phone)
+                if(postRegister(
+                        context = context,
+                        email = email,
+                        fname = firstName,
+                        lname = lastName,
+                        password = password,
+                        phone = phone) == true){
+                    Toast.makeText(
+                        context,
+                        "User created, please login to continue",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+
+                }
+                else{
+                    Toast.makeText(
+                        context,
+                        "Something went wrong (┬┬﹏┬┬)",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             },
             modifier = modifier
                 .align(CenterHorizontally)
@@ -184,9 +209,14 @@ fun login(modifier: Modifier = Modifier){
 
             Text(text = "Already have an account?")
 
-            Text(
-                text = " Login instead!",
-                style = TextStyle(fontWeight = FontWeight.Bold)
+            ClickableText(
+                text = AnnotatedString(" Login instead!"),
+                style = TextStyle(fontWeight = FontWeight.Bold),
+                onClick = {
+                    navHostController.navigate(Screen.Register.route)
+                }
+
+
             )
 
         }
@@ -195,8 +225,8 @@ fun login(modifier: Modifier = Modifier){
 
 
 
-private fun postRegister(context: Context, email: String, fname: String, lname:String, password: String, phone: String) {
-
+private fun postRegister(context: Context, email: String, fname: String, lname:String, password: String, phone: String): Boolean? {
+    var status: Boolean? = null
     val client = ApiConfig.getApiService("").postRegister(
         fname = fname, lname = lname, email = email, password = password, phone = phone
     )
@@ -211,27 +241,28 @@ private fun postRegister(context: Context, email: String, fname: String, lname:S
                 //logic if successful
 
                 if (responseBody.status == "success") {
-                    Toast.makeText(context, "${responseBody.message.toString()}, please login to continue", Toast.LENGTH_SHORT).show()
 
+                    status = true
 
                 }
 
                 if (responseBody.status == "fail") {
-                    Toast.makeText(context, "Something went wrong: ${responseBody.message.toString()}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        "Something went wrong: ${responseBody.message.toString()}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    status = false
+
                 }
             }
         }
 
         override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
             Toast.makeText(context, "Something went wrong (┬┬﹏┬┬)", Toast.LENGTH_SHORT).show()
+            status = false
         }
 
     })
-}
-
-
-@Composable
-@Preview(showBackground = true)
-fun testlogin(){
-    login()
+    return status
 }

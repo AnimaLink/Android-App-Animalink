@@ -15,6 +15,7 @@ class ProfileStore(private val context: Context) {
         private val USERNAME = stringPreferencesKey("username")
         private val EMAIL = stringPreferencesKey("email")
         private val AVATAR = stringPreferencesKey("avatar")
+        private val TOKEN = stringPreferencesKey("token")
     }
 
     val getUsernameProfile: Flow<String> = context.dataStore.data.map { preferences ->
@@ -26,12 +27,16 @@ class ProfileStore(private val context: Context) {
     val getAvatarProfile: Flow<String> = context.dataStore.data.map { preferences ->
         preferences[AVATAR] ?: ""
     }
+    val getTokenProfile: Flow<String> = context.dataStore.data.map { preferences ->
+        preferences[TOKEN] ?: ""
+    }
 
-    suspend fun saveProfile(username: String = "undefined", email: String = "undefined", avatar: String = "undefined") {
+    suspend fun saveProfile(username: String = "undefined", email: String = "undefined", avatar: String = "undefined", token:String) {
         context.dataStore.edit { preferences ->
             preferences[USERNAME] = username
             preferences[EMAIL] = email
             preferences[AVATAR] = avatar
+            preferences[TOKEN] = token
 
         }
     }
