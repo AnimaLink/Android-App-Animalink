@@ -45,6 +45,7 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -182,16 +183,10 @@ private fun postLogin(context: Context, email: String, password: String, store: 
                 if (responseBody.status == "success") {
                     GlobalScope.launch(Dispatchers.IO) {
                         store.saveProfile(token = responseBody.data?.accessToken!!)
-                    }
-                    //print the token as livedata
-                    val uiScope = CoroutineScope(Dispatchers.Main)
-                    uiScope.launch {
-                        val token: LiveData<String> = store.getTokenProfile.asLiveData()
-                        token.observeForever{data:String ->
-                            println("ini tokennya cuy: "+data)
+                        withContext(Dispatchers.Main) {
+                            navHostController.navigate(Screen.Splash.route)
                         }
                     }
-                    navHostController.navigate(Screen.Home.route)
                 }
 
                 if (responseBody.status == "fail") {
@@ -206,3 +201,4 @@ private fun postLogin(context: Context, email: String, password: String, store: 
 
     })
 }
+

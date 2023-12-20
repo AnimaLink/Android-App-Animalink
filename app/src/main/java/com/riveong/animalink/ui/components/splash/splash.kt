@@ -17,14 +17,17 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.asLiveData
 import androidx.navigation.NavHostController
 import com.riveong.animalink.R
 import com.riveong.animalink.data.datastore.ProfileStore
+import com.riveong.animalink.data.utils.observeOnce
 import com.riveong.animalink.ui.screen.Screen
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
@@ -32,11 +35,12 @@ import kotlin.coroutines.resume
 @Composable
 fun splash(modifier: Modifier = Modifier, navHostController: NavHostController) {
     val context = LocalContext.current
+    val owner = LocalLifecycleOwner.current
     val store = remember { ProfileStore(context) }
     val scope = rememberCoroutineScope()
 
     LaunchedEffect(key1 = store) {
-        val saved = wasLoginned(store)
+        val saved = wasLoginned(store, owner)
         if (saved){
             navHostController.navigate(Screen.Login.route)
         } else {
@@ -60,8 +64,9 @@ fun splash(modifier: Modifier = Modifier, navHostController: NavHostController) 
 }
 
 
-suspend fun wasLoginned(store: ProfileStore): Boolean = suspendCancellableCoroutine { continuation ->
+suspend fun wasLoginned(store: ProfileStore, owner: LifecycleOwner): Boolean = suspendCancellableCoroutine { continuation ->
     var saved = true
+
     val token: LiveData<String> = store.getTokenProfile.asLiveData()
     val observer = Observer<String> { data ->
         if (data.isEmpty() && data == "") {
@@ -71,11 +76,9 @@ suspend fun wasLoginned(store: ProfileStore): Boolean = suspendCancellableCorout
         }
         continuation.resume(saved)
     }
-    token.observeForever(observer)
-    continuation.invokeOnCancellation {
-        token.removeObserver(observer)
-    }
+    token.observeOnce(owner, observer)
 }
+
 
 /*@Composable
 fun splash(modifier: Modifier = Modifier, navHostController: NavHostController) {
