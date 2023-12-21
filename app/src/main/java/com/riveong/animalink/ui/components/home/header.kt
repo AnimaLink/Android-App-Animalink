@@ -77,6 +77,7 @@ Column(
 
         }
     }
+    Spacer(modifier = Modifier.height(10.dp))
 
     LatestAnimalsRow(listAnimals = data.value, navHostController = navHostController, navigateToDetail = navigateToDetail)
     News(
@@ -199,7 +200,8 @@ Column(
                 .align(Alignment.CenterHorizontally)
                 .width(356.dp)
                 .height(158.dp)
-                .background(color = primary, shape = RoundedCornerShape(24.dp),
+                .background(
+                    color = primary, shape = RoundedCornerShape(24.dp),
 
 
                     )
@@ -264,11 +266,12 @@ fun featureMenu(modifier: Modifier = Modifier) {
 
                         .width(62.dp)
                         .height(62.dp)
-                        .background(color = secondary, shape = RoundedCornerShape(size = 15.dp)
+                        .background(
+                            color = secondary, shape = RoundedCornerShape(size = 15.dp)
                         )
                 ) {
                     Image(
-                        painterResource(R.drawable.veterinary),
+                        painterResource(R.drawable.scan),
                         null,
                         Modifier.width(35.dp),
                         colorFilter = ColorFilter.tint(Color.White)
@@ -278,7 +281,7 @@ fun featureMenu(modifier: Modifier = Modifier) {
                 }
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
-                    text = "VetLink",
+                    text = "DetectLink",
                     textAlign = TextAlign.Center,
                     color = Color.Black,
 
@@ -300,7 +303,7 @@ fun featureMenu(modifier: Modifier = Modifier) {
                         .background(color = secondary, shape = RoundedCornerShape(size = 15.dp))
                 ) {
                     Image(
-                        painterResource(R.drawable.veterinary),
+                        painterResource(R.drawable.news),
                         null,
                         Modifier.width(35.dp),
                         colorFilter = ColorFilter.tint(Color.White)
@@ -310,7 +313,7 @@ fun featureMenu(modifier: Modifier = Modifier) {
                 }
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
-                    text = "VetLink",
+                    text = "NewsLink",
                     textAlign = TextAlign.Center,
                     color = Color.Black,
 
@@ -333,7 +336,7 @@ fun featureMenu(modifier: Modifier = Modifier) {
                         .background(color = secondary, shape = RoundedCornerShape(size = 15.dp))
                 ) {
                     Image(
-                        painterResource(R.drawable.veterinary),
+                        painterResource(R.drawable.info),
                         null,
                         Modifier.width(35.dp),
                         colorFilter = ColorFilter.tint(Color.White)
@@ -342,7 +345,7 @@ fun featureMenu(modifier: Modifier = Modifier) {
                 }
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
-                    text = "VetLink",
+                    text = "InfoLink",
                     textAlign = TextAlign.Center,
                     color = Color.Black,
 

@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Refresh
@@ -84,7 +85,7 @@ private fun BottomBar(
                 screen = Screen.Home
             ),
             NavigationItem(
-                icon = Icons.Default.Email,
+                icon = Icons.Default.Build,
                 screen = Screen.Chat
             ),
             NavigationItem(
