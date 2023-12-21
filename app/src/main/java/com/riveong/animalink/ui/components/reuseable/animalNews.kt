@@ -113,6 +113,90 @@ fun News(animal: Product, modifier: Modifier = Modifier){
     }
 }
 
+@Composable
+fun NewsBetter(animal: Product, modifier: Modifier = Modifier){
+    Box (
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+            .fillMaxWidth()
+            .height(300.dp)
+            .background(Color(0xFF25C5F5))
+
+    ){
+        Column(modifier = modifier
+            .fillMaxWidth()
+            .padding(20.dp)) {
+            Text(
+                text = "NewsLink!",
+                color = Color.White,
+                style = TextStyle(
+                    fontSize = 28.sp,
+                    fontWeight = FontWeight.ExtraBold
+                ))
+            Text(
+                text = "Linkin every paws in the park!",
+                color = Color.White,
+                style = TextStyle(
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Medium
+                ))
+
+            Row(verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                modifier = modifier
+                    .fillMaxWidth()
+            ) {
+                Image(
+                    painter = painterResource(animal.image),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .width(150.dp)
+                        .height(120.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                )
+                Column(
+                    modifier = Modifier.padding(18.dp),
+                ) {
+                    Text(
+                        text = animal.type,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        color = Color.White,
+                        style =
+                        TextStyle(
+                            fontSize = 28.sp,
+                            fontWeight = FontWeight.ExtraBold
+                        )
+
+                    )
+
+                    Text(
+                        text = animal.title,
+                        color = Color.White,
+                        style = TextStyle(fontSize = 11.sp,)
+                    )
+                    Spacer(modifier = Modifier.height(10.dp))
+                    OutlinedButton(
+                        onClick = { /*TODO*/ },
+                        modifier
+                            .width(100.dp)
+                            .height(32.dp),
+                        border = BorderStroke(1.dp, Color.White),
+                    ) {
+                        Text(
+                            text = "Read More",
+                            fontSize = 10.sp,
+                            color = Color.White
+                        )
+
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 
 @Composable

@@ -67,6 +67,7 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation("com.google.accompanist:accompanist-permissions:0.20.2")
 
     //MVVM
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
@@ -92,6 +93,7 @@ dependencies {
 
 
     //coil
+    //implementation("io.coil-kt:coil-compose:1.4.0")
     implementation("io.coil-kt:coil-compose:2.5.0")
 
     //livedata

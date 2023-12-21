@@ -211,3 +211,56 @@ fun InfoList(animal:ListBehaviourAnimalItem = ListBehaviourAnimalItem("","a","ke
     }
     Spacer(modifier = Modifier.height(20.dp))
 }
+
+@Composable
+fun InfoVet(animal:ListBehaviourAnimalItem = ListBehaviourAnimalItem("","a","kejam"), modifier: Modifier = Modifier) {
+    Column(Modifier.fillMaxWidth()) {
+        Card (
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 6.dp
+            ),
+            modifier = modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(8.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = Color.White,
+            ),
+        ){
+            Row {
+                AsyncImage(
+                    model = animal.imgUrl,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .width(150.dp)
+                        .height(120.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                )
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier.padding(8.dp)
+                ) {
+                    Text(
+                        text = animal.name!!,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        style = TextStyle(
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight(600),
+                        )
+                    )
+                    Spacer(modifier = Modifier.height(5.dp))
+
+                            Text(
+                                text = animal.behaviour!!,
+                                style = TextStyle(
+                                    fontSize = 12.sp,
+                                    fontWeight = FontWeight(500),
+                                )
+                            )
+                        }
+                    }
+            }
+        }
+
+    Spacer(modifier = Modifier.height(20.dp))
+}

@@ -6,25 +6,46 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.riveong.animalink.data.datastore.ProfileStore
+import com.riveong.animalink.data.model.Animal
+import com.riveong.animalink.ui.components.home.getAnimalData
+import com.riveong.animalink.ui.components.reuseable.ListAnimalPage
 
 @Composable
 fun ForumListPage(
     modifier: Modifier = Modifier,
+    navHostController: NavHostController, navigateToDetail: (Long) -> Unit,
 ) {
+    val context = LocalContext.current
+    val store = remember { ProfileStore(context) }
+    val data = remember { mutableStateOf(listOf(Animal(0,"https://static.wikia.nocookie.net/typemoon/images/7/71/Neco-Arc_Remake.png/revision/latest?cb=20210902002059","Neco arc","🗿 Car","Sold"))) }
+    val scope = rememberCoroutineScope()
     Column(Modifier.padding(27.dp)) {
 
         Text(
-            text = "DetectLink",
+            text = "Product Listing",
             style = TextStyle(
                 fontSize = 32.sp,
                 fontWeight = FontWeight(700),
             )
         )
-        Spacer(modifier = Modifier.height(24.dp))
+        LaunchedEffect(key1 = store) {
+            getAnimalData(store) { anima ->
+                data.value = anima ?: listOf()
+
+            }
+        }
+        ListAnimalPage(hewan = data.value, navHostController = navHostController, navigateToDetail = navigateToDetail)
     }
 }

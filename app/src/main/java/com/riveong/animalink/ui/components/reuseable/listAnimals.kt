@@ -3,6 +3,7 @@ package com.riveong.animalink.ui.components.reuseable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -18,18 +19,20 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.riveong.animalink.data.model.Animal
 
 @Composable
-fun ListAnimalPage(hewan:List<Animal>, modifier: Modifier = Modifier){
+fun ListAnimalPage(hewan:List<Animal>, modifier: Modifier = Modifier, navHostController: NavHostController,navigateToDetail: (Long) -> Unit,){
     Column(
         modifier
             .fillMaxWidth()
+            .fillMaxHeight()
     )
 
     { 
         //searchBar()
-        ListAnimals(listAnimal = hewan)
+        ListAnimals(listAnimal = hewan, navHostController = navHostController, navigateToDetail =  navigateToDetail)
     }
 }
 
@@ -37,18 +40,12 @@ fun ListAnimalPage(hewan:List<Animal>, modifier: Modifier = Modifier){
 @Composable
 fun ListAnimals(
     listAnimal: List<Animal>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navHostController: NavHostController,navigateToDetail: (Long) -> Unit,
 ) {
 
-    Column(Modifier.padding(start = 27.dp, end = 27.dp, top = 27.dp)) {
+    Column{
 
-        Text(
-            text = "Animals",
-            style = TextStyle(
-                fontSize = 32.sp,
-                fontWeight = FontWeight(700),
-            )
-        )
         SearchBar(
             query = "",
             onQueryChange = {  },
@@ -71,9 +68,8 @@ fun ListAnimals(
             modifier = modifier
         ) {
             items(listAnimal, key = { it.title }) { animol ->
-                //LatestAnimal(animol)
+                LatestAnimal(animal = animol,navHostController = navHostController, navigateToDetail = navigateToDetail)
                 Spacer(modifier = Modifier.height(24.dp))
-
             }
         }
     }

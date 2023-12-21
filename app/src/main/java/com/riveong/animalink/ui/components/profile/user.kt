@@ -18,6 +18,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -127,6 +128,19 @@ fun UserInfo(modifier: Modifier = Modifier, profile: Profile){
                     )
             )
         }
+
+        Spacer(modifier = Modifier.height(11.dp))
+        LinearProgressIndicator(progress = 0.6f)
+        Text(
+            text = "45 EXP to go and you will be Super Member",
+            style = TextStyle(
+                fontSize = 12.sp,
+                fontWeight = FontWeight(400),
+            )
+
+
+        )
+
 
 
     }

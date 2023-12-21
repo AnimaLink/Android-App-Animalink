@@ -100,6 +100,7 @@ Column(
     Spacer(modifier = Modifier.height(10.dp))
 
     LatestAnimalsRow(listAnimals = data.value, navHostController = navHostController, navigateToDetail = navigateToDetail)
+    Spacer(modifier = Modifier.height(10.dp))
     News(
         animal = Product(R.drawable.cat, "Kucing ternyata bisa sembuhkan depresi! Siapa nih yang barusan tahu kucing bisa sembuhkan depresi? Yap apakah kalian pernah perhatikan...", "Kocheng!","type moon"),
     )
