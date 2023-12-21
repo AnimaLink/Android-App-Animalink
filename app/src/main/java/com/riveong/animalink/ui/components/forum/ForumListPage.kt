@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -43,24 +44,7 @@ fun ForumListPage(
     val store = remember { ProfileStore(context) }
     val data = remember { mutableStateOf(listOf(Animal(0,"https://static.wikia.nocookie.net/typemoon/images/7/71/Neco-Arc_Remake.png/revision/latest?cb=20210902002059","Neco arc","🗿 Car","Sold"))) }
     val scope = rememberCoroutineScope()
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.BottomEnd
-    ) {
-        FloatingActionButton(
-            onClick = { navHostController.navigate(Screen.NewForum.route) {
-                popUpTo(navHostController.graph.findStartDestination().id) {
-                    saveState = true
-                }
-                restoreState = true
-                launchSingleTop = true
-            } },
-                containerColor = Color(0xFFF47D25),
-                contentColor =  Color.White
-            ) {
-            Icon(Icons.Default.Add, contentDescription = "Add")
-        }
-    }
+
 
     Column(Modifier.padding(27.dp)) {
 
@@ -78,6 +62,25 @@ fun ForumListPage(
             }
         }
         ListAnimalPage(hewan = data.value, navHostController = navHostController, navigateToDetail = navigateToDetail)
+    }
+    Box(
+        modifier = Modifier.fillMaxSize()
+            .offset(-10.dp,-10.dp),
+        contentAlignment = Alignment.BottomEnd
+    ) {
+        FloatingActionButton(
+            onClick = { navHostController.navigate(Screen.NewForum.route) {
+                popUpTo(navHostController.graph.findStartDestination().id) {
+                    saveState = true
+                }
+                restoreState = true
+                launchSingleTop = true
+            } },
+            containerColor = Color(0xFFF47D25),
+            contentColor =  Color.White
+        ) {
+            Icon(Icons.Default.Add, contentDescription = "Add")
+        }
     }
 
 
