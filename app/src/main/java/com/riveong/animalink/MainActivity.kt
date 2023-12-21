@@ -35,8 +35,10 @@ import com.riveong.animalink.ui.components.additional.VetLink
 import com.riveong.animalink.ui.components.home.headerFull
 import com.riveong.animalink.ui.components.profile.User
 import com.riveong.animalink.ui.components.chat.Chat
+import com.riveong.animalink.ui.components.forum.AddItem
 import com.riveong.animalink.ui.components.forum.DetailProduct
 import com.riveong.animalink.ui.components.forum.ForumListPage
+import com.riveong.animalink.ui.components.forum.NewForum
 import com.riveong.animalink.ui.components.history.History
 import com.riveong.animalink.ui.logic
 import com.riveong.animalink.ui.screen.NavigationItem
@@ -172,6 +174,9 @@ fun Ihate(
                 ForumListPage(navHostController = navController,navigateToDetail = { ListingID ->
                     navController.navigate(Screen.Detail.createRoute(ListingID))
                 })
+            }
+            composable(Screen.NewForum.route) {
+                AddItem()
             }
             composable(Screen.DetectLink.route) {
                 DetectLink()
