@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -44,9 +45,11 @@ import com.riveong.animalink.data.api.ApiConfig
 import com.riveong.animalink.data.datastore.ProfileStore
 import com.riveong.animalink.data.model.Animal
 import com.riveong.animalink.data.model.ForumResponse
+import com.riveong.animalink.data.model.Product
 import com.riveong.animalink.ui.components.reuseable.LatestAnimalsRow
 import com.riveong.animalink.ui.components.reuseable.LatestProductRow
 import com.riveong.animalink.data.model.productDummy
+import com.riveong.animalink.ui.components.reuseable.News
 import com.riveong.animalink.ui.theme.primary
 import com.riveong.animalink.ui.theme.secondary
 import retrofit2.Call
@@ -76,7 +79,9 @@ Column(
     }
 
     LatestAnimalsRow(listAnimals = data.value, navHostController = navHostController, navigateToDetail = navigateToDetail)
-    LatestProductRow(listProduct = productDummy)
+    News(
+        animal = Product(R.drawable.cat, "Kucing ternyata bisa sembuhkan depresi! Siapa nih yang barusan tahu kucing bisa sembuhkan depresi? Yap apakah kalian pernah perhatikan...", "Kocheng!","type moon"),
+    )
 
 }
 }
@@ -109,7 +114,7 @@ suspend fun getAnimalData(store: ProfileStore, callback: (List<Animal>?) -> Unit
         }
 
         override fun onFailure(call: Call<ForumResponse>, t: Throwable) {
-             TODO("Not yet implemented")
+             print("no data")
         }
     })
 }
@@ -188,12 +193,17 @@ Column(
         .padding(horizontal = 27.dp)) {
         Image(
             painterResource(R.drawable.banner),
-            null,
-            Modifier
+            contentDescription = null,
+            contentScale = ContentScale.FillBounds,
+            modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .width(356.dp)
                 .height(158.dp)
-                .background(color = primary, shape = RoundedCornerShape(24.dp))
+                .background(color = primary, shape = RoundedCornerShape(24.dp),
+
+
+                    )
+
 
         )
 }

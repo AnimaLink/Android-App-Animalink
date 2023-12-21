@@ -1,10 +1,14 @@
 package com.riveong.animalink.ui.components.reuseable
 
-import android.widget.Space
+
+import android.graphics.Paint.Style
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -13,11 +17,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -33,55 +37,86 @@ import com.riveong.animalink.R
 import com.riveong.animalink.data.model.Product
 
 @Composable
-fun LatestProduct(animal: Product, modifier: Modifier = Modifier){
-    Card (
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
-        ),
-        modifier = modifier.width(140.dp),
-        shape = RoundedCornerShape(8.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White,
-        ),
+fun News(animal: Product, modifier: Modifier = Modifier){
+    Box (
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+            .fillMaxWidth()
+            .height(300.dp)
+            .background(Color(0xFF25C5F5))
+
     ){
-        Column {
+        Column(modifier = modifier
+            .fillMaxWidth()
+            .padding(20.dp)) {
+            Text(
+                text = "NewsLink!",
+                color = Color.White,
+                style = TextStyle(
+                    fontSize = 28.sp,
+                    fontWeight = FontWeight.ExtraBold
+                ))
+
+        Row(verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            modifier = modifier
+                .fillMaxWidth()
+        ) {
             Image(
                 painter = painterResource(animal.image),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .width(150.dp)
                     .height(120.dp)
                     .clip(RoundedCornerShape(8.dp))
             )
-            Column(modifier = Modifier.padding(8.dp)) {
-                Text(
-                    text = animal.title,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.titleMedium.copy(
-                        fontWeight = FontWeight.ExtraBold
-                    ),
-                )
+            Column(
+                modifier = Modifier.padding(18.dp),
+                ) {
                 Text(
                     text = animal.type,
-                    style = MaterialTheme.typography.titleSmall,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    color = Color.White,
+                    style =
+                    TextStyle(
+                        fontSize = 28.sp,
+                        fontWeight = FontWeight.ExtraBold
+                    )
+
                 )
+
                 Text(
-                    text = "owner: ${animal.Seller}",
-                    style = TextStyle(fontSize = 10.sp),
-                    fontWeight = FontWeight(600)
-
-
+                    text = animal.title,
+                    color = Color.White,
+                    style = TextStyle(fontSize = 11.sp,)
                 )
+                Spacer(modifier = Modifier.height(10.dp))
+                OutlinedButton(
+                    onClick = { /*TODO*/ },
+                    modifier
+                        .width(100.dp)
+                        .height(32.dp),
+                    border = BorderStroke(1.dp, Color.White),
+                ) {
+                    Text(
+                        text = "Read More",
+                        fontSize = 10.sp,
+                        color = Color.White
+                    )
+
+                }
+            }
             }
         }
     }
 }
 
 
+
 @Composable
-fun LatestProductRow(
+fun NewsItem(
     listProduct: List<Product>,
     headline: String = "Latest Produk",
     modifier: Modifier = Modifier
@@ -103,18 +138,17 @@ fun LatestProductRow(
             modifier = modifier
         ) {
             items(listProduct, key = { it.title }) { animol ->
-                LatestProduct(animol)
+                News(animol)
             }
         }
     }
 }
 @Composable
 @Preview(showBackground = true)
-fun ProductItemPreview() {
+fun CategoryItemPreview() {
     MaterialTheme {
-        LatestProduct(
-            animal = Product(R.drawable.necoarc, "Neco arc", "🐈kucing","type moon"),
-            modifier = Modifier.padding(8.dp)
+        News(
+            animal = Product(R.drawable.cat, "Kucing ternyata bisa sembuhkan depresi! Siapa nih yang barusan tahu kucing bisa sembuhkan depresi? Yap apakah kalian pernah perhatikan...", "Kocheng!","type moon"),
         )
     }
 }
