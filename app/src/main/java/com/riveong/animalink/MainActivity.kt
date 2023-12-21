@@ -17,6 +17,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -24,8 +25,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.riveong.animalink.ui.components.additional.DetectLink
+import com.riveong.animalink.ui.components.additional.InfoLink
+import com.riveong.animalink.ui.components.additional.NewsLink
+import com.riveong.animalink.ui.components.additional.VetLink
 import com.riveong.animalink.ui.components.home.headerFull
 import com.riveong.animalink.ui.components.profile.User
 import com.riveong.animalink.ui.components.chat.Chat
@@ -129,9 +135,14 @@ fun Ihate(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
 ) {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
     Scaffold(
         bottomBar = {
-            BottomBar(navController)
+            if (currentRoute != Screen.Detail.route) {
+                BottomBar(navController)
+            }
+
         },
         modifier = modifier
     ) { innerPadding ->
@@ -153,6 +164,21 @@ fun Ihate(
             }
             composable(Screen.History.route) {
                 History()
+            }
+            composable(Screen.Forum.route) {
+                History()
+            }
+            composable(Screen.DetectLink.route) {
+                DetectLink()
+            }
+            composable(Screen.InfoLink.route) {
+                InfoLink()
+            }
+            composable(Screen.NewsLink.route) {
+                NewsLink()
+            }
+            composable(Screen.VetLink.route) {
+                VetLink()
             }
             composable(
                 route = Screen.Detail.route,

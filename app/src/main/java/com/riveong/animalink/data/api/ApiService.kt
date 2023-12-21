@@ -1,5 +1,6 @@
 package com.riveong.animalink.data.api
 
+import com.riveong.animalink.data.model.BehaviourResponse
 import com.riveong.animalink.data.model.ForumResponse
 import com.riveong.animalink.data.model.LoginResponse
 import com.riveong.animalink.data.model.RegisterResponse
@@ -42,6 +43,10 @@ interface ApiService {
     fun getSingleForum(
         @Path("id") id:String
     ): Call<SingleForumResponse>
+
+    @GET("/api/animals")
+    fun getAllAnimals(
+    ): Call<BehaviourResponse>
 
 
 

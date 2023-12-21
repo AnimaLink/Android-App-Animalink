@@ -3,13 +3,17 @@ package com.riveong.animalink.ui.components.forum
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -56,7 +60,8 @@ fun DetailProduct(modifier: Modifier = Modifier, id: Long){
     ) {
         AsyncImage(
             model = data.value.image,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .height(360.dp),
             contentDescription = "item picture",
             contentScale = ContentScale.FillBounds
@@ -83,7 +88,7 @@ fun DetailProduct(modifier: Modifier = Modifier, id: Long){
                     color = Color(0xFF000000),
                     )
                 )
-                Text(text = data.value.price,
+                Text(text = "IDR ${data.value.price}",
                     style = TextStyle(
                         fontSize = 22.sp,
                         color = Color(0xFF000000),
@@ -91,6 +96,21 @@ fun DetailProduct(modifier: Modifier = Modifier, id: Long){
                 )
                 Spacer(modifier = Modifier.height(20.dp))
                 Text(text = data.value.description)
+                Spacer(modifier = Modifier.height(20.dp))
+                    Row {
+                        Button(onClick = { /*TODO*/ }) {
+                            Text(text = "Order")
+                        }
+
+                        Spacer(modifier = Modifier.width(10.dp))
+
+                        Button(
+                            onClick = { /*TODO*/ }) {
+                            Text(text = "Chat Seller")
+
+                        }
+                    
+                    }
                 Spacer(modifier = Modifier.height(20.dp))
                 Text(text = "Comments",
                 style = TextStyle(

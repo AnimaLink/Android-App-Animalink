@@ -108,11 +108,14 @@ fun LatestProductRow(
     }
 }
 @Composable
-@Preview(showBackground = true)
 fun ProductItemPreview() {
     MaterialTheme {
-        LatestProduct(
-            animal = Product(R.drawable.necoarc, "Neco arc", "🐈kucing","type moon"),
+        LatestProductRow(
+            listProduct = listOf<Product>(
+                Product(R.drawable.necoarc, "Neco arc", "🐈kucing","type moon"),
+                Product(R.drawable.necoarc, "Neco arc", "🐈kucing","type moon"),
+                Product(R.drawable.necoarc, "Neco arc", "🐈kucing","type moon")
+            ),
             modifier = Modifier.padding(8.dp)
         )
     }

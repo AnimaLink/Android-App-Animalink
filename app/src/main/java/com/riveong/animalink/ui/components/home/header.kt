@@ -2,6 +2,7 @@ package com.riveong.animalink.ui.components.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,8 +39,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
+import com.riveong.animalink.Ihate
 import com.riveong.animalink.R
 import com.riveong.animalink.data.api.ApiConfig
 import com.riveong.animalink.data.datastore.ProfileStore
@@ -49,7 +55,15 @@ import com.riveong.animalink.data.model.Product
 import com.riveong.animalink.ui.components.reuseable.LatestAnimalsRow
 import com.riveong.animalink.ui.components.reuseable.LatestProductRow
 import com.riveong.animalink.data.model.productDummy
+import com.riveong.animalink.ui.components.additional.DetectLink
+import com.riveong.animalink.ui.components.additional.InfoLink
+import com.riveong.animalink.ui.components.additional.NewsLink
+import com.riveong.animalink.ui.components.additional.VetLink
+import com.riveong.animalink.ui.components.auth.login
+import com.riveong.animalink.ui.components.auth.register
 import com.riveong.animalink.ui.components.reuseable.News
+import com.riveong.animalink.ui.components.splash.splash
+import com.riveong.animalink.ui.screen.Screen
 import com.riveong.animalink.ui.theme.primary
 import com.riveong.animalink.ui.theme.secondary
 import retrofit2.Call
@@ -60,8 +74,14 @@ import retrofit2.Response
 fun headerFull(modifier: Modifier = Modifier,username: String, navHostController: NavHostController,navigateToDetail: (Long) -> Unit,){
     val context = LocalContext.current
     val store = remember { ProfileStore(context) }
-    val data = remember { mutableStateOf(listOf(Animal(0,"","","",""))) }
+    val data = remember { mutableStateOf(listOf(Animal(0,"https://static.wikia.nocookie.net/typemoon/images/7/71/Neco-Arc_Remake.png/revision/latest?cb=20210902002059","Neco arc","🗿 Car","Sold"))) }
     val scope = rememberCoroutineScope()
+    LaunchedEffect(key1 = store) {
+        getAnimalData(store) { anima ->
+            data.value = anima ?: listOf()
+
+        }
+    }
 Column(
     modifier = Modifier
         .fillMaxWidth()
@@ -70,7 +90,7 @@ Column(
 ) {
     header(username = username)
     banner()
-    featureMenu()
+    featureMenu(navHostController)
     LaunchedEffect(key1 = store) {
         getAnimalData(store) { anima ->
             data.value = anima ?: listOf()
@@ -201,19 +221,19 @@ Column(
                 .width(356.dp)
                 .height(158.dp)
                 .background(
-                    color = primary, shape = RoundedCornerShape(24.dp),
-
-
-                    )
-
-
+                    color = primary, shape = RoundedCornerShape(24.dp),)
         )
 }
         Spacer(modifier = Modifier.height(28.dp))
     }
 
+
+
+
+
 @Composable
-fun featureMenu(modifier: Modifier = Modifier) {
+fun featureMenu(navHostController: NavHostController,modifier: Modifier = Modifier) {
+
     Column(
         Modifier
             .fillMaxWidth()
@@ -231,14 +251,27 @@ fun featureMenu(modifier: Modifier = Modifier) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Box(
                     contentAlignment = Alignment.Center,
-                    modifier = Modifier
+                    modifier = Modifier.clickable {
 
+                        navHostController.navigate(Screen.VetLink.route) {
+                            popUpTo(navHostController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            restoreState = true
+                            launchSingleTop = true
+                        }
+
+
+                    }
                         .width(62.dp)
                         .height(62.dp)
-                        .background(color = secondary, shape = RoundedCornerShape(size = 15.dp))
+                        .background(color = secondary, shape = RoundedCornerShape(size = 15.dp)
+
+
+                        )
                 ) {
                     Image(
-                        painterResource(R.drawable.veterinary),
+                        painterResource(R.drawable.vet),
                         null,
                         Modifier.width(35.dp),
                         colorFilter = ColorFilter.tint(Color.White)
@@ -262,7 +295,18 @@ fun featureMenu(modifier: Modifier = Modifier) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Box(
                     contentAlignment = Alignment.Center,
-                    modifier = Modifier
+                    modifier = Modifier.clickable {
+
+                        navHostController.navigate(Screen.DetectLink.route) {
+                            popUpTo(navHostController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            restoreState = true
+                            launchSingleTop = true
+                        }
+
+
+                    }
 
                         .width(62.dp)
                         .height(62.dp)
@@ -296,7 +340,18 @@ fun featureMenu(modifier: Modifier = Modifier) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Box(
                     contentAlignment = Alignment.Center,
-                    modifier = Modifier
+                    modifier = Modifier.clickable {
+
+                        navHostController.navigate(Screen.NewsLink.route) {
+                            popUpTo(navHostController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            restoreState = true
+                            launchSingleTop = true
+                        }
+
+
+                    }
 
                         .width(62.dp)
                         .height(62.dp)
@@ -329,7 +384,18 @@ fun featureMenu(modifier: Modifier = Modifier) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Box(
                     contentAlignment = Alignment.Center,
-                    modifier = Modifier
+                    modifier = Modifier.clickable {
+
+                        navHostController.navigate(Screen.InfoLink.route) {
+                            popUpTo(navHostController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            restoreState = true
+                            launchSingleTop = true
+                        }
+
+
+                    }
 
                         .width(62.dp)
                         .height(62.dp)
