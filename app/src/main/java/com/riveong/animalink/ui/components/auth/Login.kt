@@ -236,7 +236,7 @@ fun postRegister(context: Context, email: String, fname: String, lname:String, p
                 } else if (responseBody.status != "success") {
                     Handler(Looper.getMainLooper()).post {
                         onResult("failed, email already registered / illegal input")
-                        Toast.makeText(context, "User created, please login to continue", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Check ur data!!!", Toast.LENGTH_SHORT).show()
 
                     }
 

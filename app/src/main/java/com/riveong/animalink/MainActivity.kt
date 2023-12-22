@@ -50,25 +50,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AnimalinkTheme {
-                //register()
-                //splash()
-                //register = register()
-                //login = login()
-                //register()
-                //home = headerFull(username = "Jamal")
-                //product list page =  ListProductPage(produk = productDummy)
-                //ListAnimalPage(hewan = animalsDummy)
-                //user = User()
-
-                //detail product = DetailProduct("")
-                //DetailProduct(title = "Ayam")
-
-
                 logic()
-
-
-                //NewForum()
-
             }
         }
     }
@@ -94,10 +76,6 @@ private fun BottomBar(
             NavigationItem(
                 icon = Icons.Default.Home,
                 screen = Screen.Home
-            ),
-            NavigationItem(
-                icon = Icons.Default.Build,
-                screen = Screen.Chat
             ),
             NavigationItem(
                 icon = Icons.Default.ShoppingCart,
