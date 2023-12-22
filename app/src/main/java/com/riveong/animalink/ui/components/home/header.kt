@@ -52,6 +52,7 @@ import com.riveong.animalink.data.datastore.ProfileStore
 import com.riveong.animalink.data.model.Animal
 import com.riveong.animalink.data.model.ForumResponse
 import com.riveong.animalink.data.model.Product
+import com.riveong.animalink.data.model.Profile
 import com.riveong.animalink.ui.components.reuseable.LatestAnimalsRow
 import com.riveong.animalink.ui.components.reuseable.LatestProductRow
 import com.riveong.animalink.data.model.productDummy
@@ -61,6 +62,7 @@ import com.riveong.animalink.ui.components.additional.NewsLink
 import com.riveong.animalink.ui.components.additional.VetLink
 import com.riveong.animalink.ui.components.auth.login
 import com.riveong.animalink.ui.components.auth.register
+import com.riveong.animalink.ui.components.profile.getUserProfile
 import com.riveong.animalink.ui.components.reuseable.News
 import com.riveong.animalink.ui.components.splash.splash
 import com.riveong.animalink.ui.screen.Screen
@@ -75,6 +77,8 @@ fun headerFull(modifier: Modifier = Modifier,username: String, navHostController
     val context = LocalContext.current
     val store = remember { ProfileStore(context) }
     val data = remember { mutableStateOf(listOf(Animal(0,"https://static.wikia.nocookie.net/typemoon/images/7/71/Neco-Arc_Remake.png/revision/latest?cb=20210902002059","Neco arc","🗿 Car","Sold"))) }
+    val userData = remember { mutableStateOf(Profile("","")) }
+
     val scope = rememberCoroutineScope()
     LaunchedEffect(key1 = store) {
         getAnimalData(store) { anima ->
@@ -82,13 +86,21 @@ fun headerFull(modifier: Modifier = Modifier,username: String, navHostController
 
         }
     }
+
+    LaunchedEffect(key1 = store) {
+        getUserProfile(store) { profile ->
+            userData.value = profile
+        }
+    }
+
+
 Column(
     modifier = Modifier
         .fillMaxWidth()
         .verticalScroll(rememberScrollState())
 
 ) {
-    header(username = username)
+    header(data = userData.value)
     banner()
     featureMenu(navHostController)
     LaunchedEffect(key1 = store) {
@@ -142,7 +154,7 @@ suspend fun getAnimalData(store: ProfileStore, callback: (List<Animal>?) -> Unit
 }
 
 @Composable
-fun header(username: String = "Jamal", modifier: Modifier = Modifier){
+fun header(data: Profile, modifier: Modifier = Modifier){
 
     Row (
         verticalAlignment = Alignment.CenterVertically,
@@ -152,7 +164,7 @@ fun header(username: String = "Jamal", modifier: Modifier = Modifier){
     ){
 
         AsyncImage(
-            model = "https://enoughproject.org/wp-content/uploads/2017/04/Ryan_Gosling-e1493121669188-300x300.jpg",
+            model = data.avatar,
             contentDescription = null,
             modifier = Modifier
                 .clip(CircleShape)
@@ -177,7 +189,7 @@ fun header(username: String = "Jamal", modifier: Modifier = Modifier){
                 fontWeight = FontWeight(700),
                 fontSize = 15.sp
             ),
-            text = username
+            text = data.username!!
         )
 
         Spacer(

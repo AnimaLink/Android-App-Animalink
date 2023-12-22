@@ -30,6 +30,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.LiveData
@@ -65,7 +66,7 @@ fun register(modifier: Modifier = Modifier, navHostController: NavHostController
             .padding(24.dp)
     ) {
 
-        Spacer(modifier = Modifier.height(84.dp))
+        Spacer(modifier = Modifier.height(30.dp))
 
         Image(
             painter = painterResource(id = R.drawable.logo_dummy),
@@ -111,6 +112,7 @@ fun register(modifier: Modifier = Modifier, navHostController: NavHostController
 
         OutlinedTextField(
             value = password,
+            visualTransformation = PasswordVisualTransformation(),
             onValueChange = { password = it },
             label = { Text("Password") },
             singleLine = true,
@@ -123,7 +125,9 @@ fun register(modifier: Modifier = Modifier, navHostController: NavHostController
         Spacer(modifier = Modifier.height(35.dp))
 
         Button(
-            onClick = { postLogin(context, email, password, store, navHostController = navHostController) },
+            onClick = {
+                Toast.makeText(context, "loading", Toast.LENGTH_SHORT).show()
+                postLogin(context, email, password, store, navHostController = navHostController) },
             modifier = modifier
                 .align(Alignment.CenterHorizontally)
                 .width(267.dp)
@@ -187,9 +191,11 @@ private fun postLogin(context: Context, email: String, password: String, store: 
                             navHostController.navigate(Screen.Splash.route)
                         }
                     }
+                    Toast.makeText(context, "Welcome!", Toast.LENGTH_SHORT).show()
+
                 }
 
-                if (responseBody.status == "fail") {
+                else if (responseBody.status != "success") {
                     Toast.makeText(context, "Something went wrong: ${responseBody.message.toString()}", Toast.LENGTH_SHORT).show()
                 }
             }

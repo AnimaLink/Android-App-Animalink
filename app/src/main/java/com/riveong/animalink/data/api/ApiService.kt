@@ -1,8 +1,11 @@
 package com.riveong.animalink.data.api
 
 import com.riveong.animalink.data.model.BehaviourResponse
+import com.riveong.animalink.data.model.CommentResponse
 import com.riveong.animalink.data.model.ForumResponse
+import com.riveong.animalink.data.model.GetCommentNew
 import com.riveong.animalink.data.model.LoginResponse
+import com.riveong.animalink.data.model.PostCommentResponse
 import com.riveong.animalink.data.model.RegisterResponse
 import com.riveong.animalink.data.model.SingleForumResponse
 import com.riveong.animalink.data.model.UserResponse
@@ -47,9 +50,24 @@ interface ApiService {
         @Path("id") id:String
     ): Call<SingleForumResponse>
 
+    @GET("/api/forums/comments/{forumId}")
+    fun getComment(
+        @Path("forumId") id:String
+    ): Call<GetCommentNew>
+
+    @FormUrlEncoded
+    @POST("/api/forums/comments/{forumId}")
+    fun postComment(
+        @Path("forumId") id:String,
+        @Field("comment",encoded = true) comment:String
+    ): Call<PostCommentResponse>
+
+
     @GET("/api/animals")
     fun getAllAnimals(
     ): Call<BehaviourResponse>
+
+
 
 
 

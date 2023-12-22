@@ -1,6 +1,8 @@
 package com.riveong.animalink.ui.components.auth
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -29,7 +31,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -37,6 +39,7 @@ import com.riveong.animalink.R
 import com.riveong.animalink.data.api.ApiConfig
 import com.riveong.animalink.data.model.RegisterResponse
 import com.riveong.animalink.ui.screen.Screen
+import kotlinx.coroutines.DelicateCoroutinesApi
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -44,13 +47,12 @@ import retrofit2.Response
 @Composable
 fun login(modifier: Modifier = Modifier, navHostController: NavHostController){
     val context = LocalContext.current
-
-
     var email by remember { mutableStateOf("") }
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
+    var message = "please check ur data, password must be 6 chars"
 
     Column(
         modifier
@@ -58,7 +60,7 @@ fun login(modifier: Modifier = Modifier, navHostController: NavHostController){
             .padding(24.dp)
     ) {
 
-        Spacer(modifier = Modifier.height(84.dp))
+        Spacer(modifier = Modifier.height(30.dp))
 
         Image(
             painter = painterResource(id = R.drawable.logo_dummy),
@@ -144,6 +146,7 @@ fun login(modifier: Modifier = Modifier, navHostController: NavHostController){
 
         OutlinedTextField(
             value = password,
+            visualTransformation = PasswordVisualTransformation(),
             onValueChange = { password = it },
             label = { Text("Password") },
             singleLine = true,
@@ -166,29 +169,17 @@ fun login(modifier: Modifier = Modifier, navHostController: NavHostController){
 
         Button(
             onClick = {
-                if(postRegister(
-                        context = context,
-                        email = email,
-                        fname = firstName,
-                        lname = lastName,
-                        password = password,
-                        phone = phone) == true){
-                    Toast.makeText(
-                        context,
-                        "User created, please login to continue",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                Toast.makeText(context, "loading", Toast.LENGTH_SHORT).show()
+                postRegister(context, email, firstName, lastName, password, phone, navHostController) { messsage ->
+                    message = messsage
+                }
 
 
-                }
-                else{
-                    Toast.makeText(
-                        context,
-                        "Something went wrong (┬┬﹏┬┬)",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            },
+
+            }
+            ,
+
+
             modifier = modifier
                 .align(CenterHorizontally)
                 .width(267.dp)
@@ -224,8 +215,47 @@ fun login(modifier: Modifier = Modifier, navHostController: NavHostController){
 }
 
 
+@OptIn(DelicateCoroutinesApi::class)
+fun postRegister(context: Context, email: String, fname: String, lname:String, password: String, phone: String, navHostController: NavHostController, onResult: (String) -> Unit) {
+    val client = ApiConfig.getApiService("").postRegister(
+        fname = fname, lname = lname, email = email, password = password, phone = phone
+    )
+    client.enqueue(object : Callback<RegisterResponse> {
+        override fun onResponse(
+            call: Call<RegisterResponse>,
+            response: Response<RegisterResponse>
+        ) {
+            val responseBody = response.body()
+            if (response.isSuccessful && responseBody != null) {
+                if (responseBody.status == "success") {
+                    Handler(Looper.getMainLooper()).post {
+                        onResult("User created, please login to continue")
+                        Toast.makeText(context, "User created, please login to continue", Toast.LENGTH_SHORT).show()
+                        navHostController.navigate(Screen.Register.route)
+                    }
+                } else if (responseBody.status != "success") {
+                    Handler(Looper.getMainLooper()).post {
+                        onResult("failed, email already registered / illegal input")
+                        Toast.makeText(context, "User created, please login to continue", Toast.LENGTH_SHORT).show()
 
-private fun postRegister(context: Context, email: String, fname: String, lname:String, password: String, phone: String): Boolean? {
+                    }
+
+                    }
+                }
+            }
+
+
+        override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
+            Handler(Looper.getMainLooper()).post {
+                onResult("Check your internet connection")
+            }
+        }
+    })
+}
+
+
+/*
+private fun postRegister(context: Context, email: String, fname: String, lname:String, password: String, phone: String, navHostController: NavHostController): Boolean? {
     var status: Boolean? = null
     val client = ApiConfig.getApiService("").postRegister(
         fname = fname, lname = lname, email = email, password = password, phone = phone
@@ -241,12 +271,17 @@ private fun postRegister(context: Context, email: String, fname: String, lname:S
                 //logic if successful
 
                 if (responseBody.status == "success") {
-
+                    Toast.makeText(
+                        context,
+                        "User created, please login to continue",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    navHostController.navigate(Screen.Register.route)
                     status = true
 
                 }
 
-                if (responseBody.status == "fail") {
+                if (responseBody.status != "success") {
                     Toast.makeText(
                         context,
                         "Something went wrong: ${responseBody.message.toString()}",
@@ -266,3 +301,4 @@ private fun postRegister(context: Context, email: String, fname: String, lname:S
     })
     return status
 }
+        */

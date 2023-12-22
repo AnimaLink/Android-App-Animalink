@@ -59,7 +59,7 @@ fun AddItem(
     val store = remember { ProfileStore(context) }
     var expanded by remember { mutableStateOf(false) }
     var expanded2 by remember { mutableStateOf(false) }
-    var name by remember { mutableStateOf("") }
+        var name by remember { mutableStateOf("") }
     var price by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
     var forumTypeID by remember { mutableStateOf("forumTypeID") }
