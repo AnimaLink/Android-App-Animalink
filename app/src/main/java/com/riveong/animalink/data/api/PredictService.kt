@@ -34,7 +34,7 @@ suspend fun uploadImage(bitmap: Bitmap, context: Context): DetectResponse? {
 
     // Create a Request
     val request = Request.Builder()
-        .url("https://ml-deploy-khmozn4qbq-et.a.run.app/predict")
+        .url("http://34.28.150.111/predict")
         .post(body)
         .build()
 

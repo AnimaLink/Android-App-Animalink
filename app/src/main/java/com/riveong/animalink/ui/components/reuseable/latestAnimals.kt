@@ -149,7 +149,7 @@ fun LatestAnimalsRow(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             modifier = modifier
         ) {
-            items(listAnimals, key = { it.title }) { animol ->
+            items(listAnimals, key = { it.id }) { animol ->
                 LatestAnimal(animol, navHostController = navHostController, navigateToDetail = navigateToDetail)
             }
         }

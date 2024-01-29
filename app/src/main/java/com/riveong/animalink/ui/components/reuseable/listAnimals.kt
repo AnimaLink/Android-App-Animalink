@@ -67,7 +67,7 @@ fun ListAnimals(
             verticalArrangement = Arrangement.spacedBy(19.dp),
             modifier = modifier
         ) {
-            items(listAnimal, key = { it.title }) { animol ->
+            items(listAnimal, key = { it.id }) { animol ->
                 LatestAnimal(animal = animol,navHostController = navHostController, navigateToDetail = navigateToDetail)
                 Spacer(modifier = Modifier.height(24.dp))
             }
